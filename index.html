@@ -15,9 +15,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
         
+        /* Logo Multi-Color Gradient Bar (Green, Blue, Red, Purple) */
+        .polaris-gradient-bar {
+            background: linear-gradient(90deg, #16a34a 0%, #0284c7 35%, #ef4444 70%, #9333ea 100%);
+        }
+
         /* Print Styles for Slip & Table */
         @media print {
             body * { visibility: hidden; }
@@ -38,56 +43,58 @@
 <body class="text-gray-800">
 
     <!-- Navbar -->
-    <nav class="bg-white shadow-md border-b-4 border-red-600 sticky top-0 z-40">
+    <nav class="bg-white shadow-md sticky top-0 z-40">
         <div class="max-w-[98%] mx-auto px-4">
             <div class="flex justify-between h-20 items-center">
                 <div class="flex items-center space-x-3">
-                    <img src="logo.png" alt="Polaris Consultants" onerror="handleLogoError(this)" class="h-14 w-auto object-contain">
+                    <img src="logo.png" alt="Polaris Consultants" onerror="handleLogoFallback(this)" class="h-14 w-auto object-contain">
                     <div>
-                        <h1 class="text-2xl font-extrabold tracking-wider text-gray-900">POLARIS <span class="text-red-600">CONSULTANTS.</span></h1>
-                        <p class="text-xs text-gray-500 font-medium">Agent & Client Visa Management System</p>
+                        <h1 class="text-2xl font-black tracking-wider text-gray-900">POLARIS <span class="text-red-600">CONSULTANTS</span></h1>
+                        <p class="text-xs font-semibold text-sky-700">Agent & Client Visa Management System</p>
                     </div>
                 </div>
                 <div class="flex flex-wrap gap-2">
                     <button onclick="exportToExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-sm font-medium shadow flex items-center gap-2 transition">
                         <i class="fas fa-file-excel"></i> Export Excel
                     </button>
-                    <button onclick="printFullReport()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm font-medium shadow flex items-center gap-2 transition">
+                    <button onclick="printFullReport()" class="bg-sky-600 hover:bg-sky-700 text-white px-3 py-2 rounded-lg text-sm font-medium shadow flex items-center gap-2 transition">
                         <i class="fas fa-print"></i> Print Report
                     </button>
-                    <button onclick="downloadBackup()" class="bg-gray-700 hover:bg-gray-800 text-white px-3 py-2 rounded-lg text-sm font-medium shadow flex items-center gap-2 transition" title="Save Backup File">
+                    <button onclick="downloadBackup()" class="bg-gray-800 hover:bg-gray-900 text-white px-3 py-2 rounded-lg text-sm font-medium shadow flex items-center gap-2 transition" title="Save Backup File">
                         <i class="fas fa-download"></i> Backup
                     </button>
-                    <label class="bg-amber-600 hover:bg-amber-700 text-white px-3 py-2 rounded-lg text-sm font-medium shadow flex items-center gap-2 cursor-pointer transition" title="Restore Backup File">
+                    <label class="bg-purple-600 hover:bg-purple-700 text-white px-3 py-2 rounded-lg text-sm font-medium shadow flex items-center gap-2 cursor-pointer transition" title="Restore Backup File">
                         <i class="fas fa-upload"></i> Restore
                         <input type="file" id="restoreFile" accept=".json" class="hidden" onchange="restoreBackup(event)">
                     </label>
                 </div>
             </div>
         </div>
+        <!-- Logo Multi-Color Bottom Border -->
+        <div class="h-1.5 w-full polaris-gradient-bar"></div>
     </nav>
 
     <div class="max-w-[98%] mx-auto px-3 py-6">
         
-        <!-- Dashboard Summary Cards -->
+        <!-- Dashboard Summary Cards (Matched to Logo Colors) -->
         <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-6">
-            <div class="bg-white rounded-xl shadow p-4 border-l-4 border-blue-600">
+            <div class="bg-white rounded-xl shadow p-4 border-l-4 border-sky-600">
                 <div class="flex justify-between items-center">
                     <div>
                         <p class="text-[11px] font-semibold text-gray-500 uppercase">Total Agents</p>
                         <h3 class="text-2xl font-bold text-gray-900 mt-1" id="statTotalAgents">0</h3>
                     </div>
-                    <div class="p-2.5 bg-blue-50 rounded-full text-blue-600"><i class="fas fa-user-tie text-lg"></i></div>
+                    <div class="p-2.5 bg-sky-50 rounded-full text-sky-600"><i class="fas fa-user-tie text-lg"></i></div>
                 </div>
             </div>
 
-            <div class="bg-white rounded-xl shadow p-4 border-l-4 border-indigo-600">
+            <div class="bg-white rounded-xl shadow p-4 border-l-4 border-blue-700">
                 <div class="flex justify-between items-center">
                     <div>
                         <p class="text-[11px] font-semibold text-gray-500 uppercase">Total Clients</p>
                         <h3 class="text-2xl font-bold text-gray-900 mt-1" id="statTotalClients">0</h3>
                     </div>
-                    <div class="p-2.5 bg-indigo-50 rounded-full text-indigo-600"><i class="fas fa-users text-lg"></i></div>
+                    <div class="p-2.5 bg-blue-50 rounded-full text-blue-700"><i class="fas fa-users text-lg"></i></div>
                 </div>
             </div>
 
@@ -111,13 +118,13 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-xl shadow p-4 border-l-4 border-amber-500">
+            <div class="bg-white rounded-xl shadow p-4 border-l-4 border-orange-500">
                 <div class="flex justify-between items-center">
                     <div>
                         <p class="text-[11px] font-semibold text-gray-500 uppercase">Pending Pay</p>
-                        <h3 class="text-2xl font-bold text-amber-600 mt-1" id="statPaymentPending">0</h3>
+                        <h3 class="text-2xl font-bold text-orange-600 mt-1" id="statPaymentPending">0</h3>
                     </div>
-                    <div class="p-2.5 bg-amber-50 rounded-full text-amber-600"><i class="fas fa-clock text-lg"></i></div>
+                    <div class="p-2.5 bg-orange-50 rounded-full text-orange-600"><i class="fas fa-clock text-lg"></i></div>
                 </div>
             </div>
 
@@ -158,43 +165,43 @@
 
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 mb-1">Agent Name *</label>
-                        <input type="text" id="agentName" list="agentSuggestions" required placeholder="e.g. Asad" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                        <input type="text" id="agentName" list="agentSuggestions" required placeholder="e.g. Asad" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none">
                         <datalist id="agentSuggestions"></datalist>
                     </div>
 
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 mb-1">Customer Name *</label>
-                        <input type="text" id="customerName" required placeholder="Full Name" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                        <input type="text" id="customerName" required placeholder="Full Name" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none">
                     </div>
 
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 mb-1">Father Name *</label>
-                        <input type="text" id="fatherName" required placeholder="Father's Name" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                        <input type="text" id="fatherName" required placeholder="Father's Name" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none">
                     </div>
 
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 mb-1">CNIC No *</label>
-                        <input type="text" id="cnic" required placeholder="35202-1234567-1" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                        <input type="text" id="cnic" required placeholder="35202-1234567-1" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none">
                     </div>
 
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 mb-1">Passport No *</label>
-                        <input type="text" id="passportNo" required placeholder="AB1234567" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm uppercase focus:ring-2 focus:ring-red-500 focus:outline-none">
+                        <input type="text" id="passportNo" required placeholder="AB1234567" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm uppercase focus:ring-2 focus:ring-sky-500 focus:outline-none">
                     </div>
 
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 mb-1">Contact No *</label>
-                        <input type="text" id="contactNo" required placeholder="0300-1234567" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                        <input type="text" id="contactNo" required placeholder="0300-1234567" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none">
                     </div>
 
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 mb-1">Country (Optional)</label>
-                        <input type="text" id="country" placeholder="e.g. Turkey, Germany, UK" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                        <input type="text" id="country" placeholder="e.g. Turkey, Germany, UK" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none">
                     </div>
 
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 mb-1">Visa Category *</label>
-                        <select id="visaType" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
+                        <select id="visaType" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-sky-500 focus:outline-none">
                             <option value="Study Visa">Study Visa</option>
                             <option value="Work Visa">Work Visa</option>
                             <option value="Azaad Visa">Azaad Visa</option>
@@ -203,12 +210,12 @@
 
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 mb-1">Entry / Start Date *</label>
-                        <input type="date" id="entryDate" required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                        <input type="date" id="entryDate" required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none">
                     </div>
 
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 mb-1">Payment Status *</label>
-                        <select id="paymentStatus" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
+                        <select id="paymentStatus" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-sky-500 focus:outline-none">
                             <option value="Pending">Pending</option>
                             <option value="Complete">Complete</option>
                         </select>
@@ -216,7 +223,7 @@
 
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 mb-1">Reference Status *</label>
-                        <select id="refStatus" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
+                        <select id="refStatus" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-sky-500 focus:outline-none">
                             <option value="Pending">Pending</option>
                             <option value="Complete">Complete</option>
                         </select>
@@ -229,7 +236,7 @@
 
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 mb-1">Girish Status *</label>
-                        <select id="girishStatus" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
+                        <select id="girishStatus" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-sky-500 focus:outline-none">
                             <option value="Pending">Pending</option>
                             <option value="Complete">Complete</option>
                         </select>
@@ -237,12 +244,12 @@
 
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 mb-1">Total Deal Amount (PKR)</label>
-                        <input type="number" id="totalAmount" placeholder="0" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                        <input type="number" id="totalAmount" placeholder="0" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none">
                     </div>
 
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 mb-1">Received Amount (PKR)</label>
-                        <input type="number" id="paidAmount" placeholder="0" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                        <input type="number" id="paidAmount" placeholder="0" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none">
                     </div>
 
                     <div>
@@ -307,7 +314,7 @@
                     </select>
                 </div>
                 <div class="text-xs text-gray-500 font-medium">
-                    <i class="fas fa-info-circle text-blue-500"></i> Visa <b>Complete</b> karne par <b>Ticket & Days</b> option khul jayega
+                    <i class="fas fa-info-circle text-sky-600"></i> Visa <b>Complete</b> karne par <b>Ticket & Days</b> option khul jayega
                 </div>
             </div>
 
@@ -341,11 +348,11 @@
         <div id="agentSummaryTab" class="hidden">
             <div class="bg-white rounded-xl shadow-md p-6">
                 <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-lg font-bold text-gray-800"><i class="fas fa-user-tie text-blue-600 mr-2"></i>Total Agent Performance & Summary</h2>
+                    <h2 class="text-lg font-bold text-gray-800"><i class="fas fa-user-tie text-sky-600 mr-2"></i>Total Agent Performance & Summary</h2>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200 text-sm">
-                        <thead class="bg-gray-800 text-white text-xs uppercase">
+                        <thead class="bg-gray-900 text-white text-xs uppercase">
                             <tr>
                                 <th class="px-4 py-3 text-left">Agent Name</th>
                                 <th class="px-4 py-3 text-center">Total Clients</th>
@@ -374,7 +381,7 @@
             <div class="flex justify-between items-center p-4 border-b bg-gray-50 rounded-t-2xl no-print">
                 <h3 class="font-bold text-gray-800"><i class="fas fa-receipt text-red-600 mr-2"></i>Official Slip Preview</h3>
                 <div class="flex gap-2">
-                    <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-lg text-sm font-semibold shadow flex items-center gap-2">
+                    <button onclick="window.print()" class="bg-sky-600 hover:bg-sky-700 text-white px-4 py-1.5 rounded-lg text-sm font-semibold shadow flex items-center gap-2">
                         <i class="fas fa-print"></i> Print Slip
                     </button>
                     <button onclick="closeSlipModal()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-3 py-1.5 rounded-lg text-sm font-semibold">
@@ -386,12 +393,12 @@
             <!-- Printable Slip Content -->
             <div id="printableArea" class="p-8 bg-white">
                 <!-- Slip Header -->
-                <div class="flex justify-between items-center border-b-2 border-red-600 pb-4 mb-6">
+                <div class="flex justify-between items-center pb-4 mb-2">
                     <div class="flex items-center gap-4">
-                        <img src="logo.png" alt="Polaris Logo" onerror="handleLogoError(this)" class="h-16 w-auto object-contain">
+                        <img src="logo.png" alt="Polaris Logo" onerror="handleLogoFallback(this)" class="h-16 w-auto object-contain">
                         <div>
-                            <h1 class="text-2xl font-black tracking-wide text-gray-900">POLARIS <span class="text-red-600">CONSULTANTS.</span></h1>
-                            <p class="text-xs text-gray-600">Study Visa | Work Visa | Azaad Visa Consultancy</p>
+                            <h1 class="text-2xl font-black tracking-wide text-gray-900">POLARIS <span class="text-red-600">CONSULTANTS</span></h1>
+                            <p class="text-xs font-semibold text-sky-700">Study Visa | Work Visa | Azaad Visa Consultancy</p>
                             <p class="text-xs text-gray-500">Johar Town, Lahore, Pakistan</p>
                         </div>
                     </div>
@@ -401,6 +408,7 @@
                         <p class="text-xs text-gray-500">Slip ID: <span id="slipId" class="font-semibold text-gray-800"></span></p>
                     </div>
                 </div>
+                <div class="h-1 w-full polaris-gradient-bar mb-6"></div>
 
                 <!-- Dynamic Slip Body -->
                 <div id="slipDynamicContent"></div>
@@ -429,7 +437,7 @@
                         <div>
                             <div class="border-t-2 border-gray-800 w-56 mx-auto pt-1.5">
                                 <span class="text-xs font-bold text-gray-900 uppercase block">Authorized Signature & Stamp</span>
-                                <span class="text-[11px] text-red-600 font-semibold block">Polaris Consultants</span>
+                                <span class="text-[11px] text-red-600 font-bold block">Polaris Consultants</span>
                             </div>
                         </div>
                     </div>
@@ -439,19 +447,13 @@
     </div>
 
     <script>
-        // Auto Logo Fallback Handler
-        function handleLogoError(img) {
-            const fallbacks = [
-                'Polaris Consultants Ribbon Star Logo.png',
-                'logo.jpg',
-                'logo.jpeg',
-                'Logo.png',
-                'LOGO.png'
-            ];
-            let attempt = parseInt(img.dataset.attempt || '0');
-            if (attempt < fallbacks.length) {
-                img.dataset.attempt = attempt + 1;
-                img.src = fallbacks[attempt];
+        // Logo Fallback Handler (Checks common filenames automatically if logo.png is named slightly differently)
+        function handleLogoFallback(img) {
+            const alternatives = ['Logo.png', 'LOGO.png', 'logo.jpg', 'logo.jpeg', 'Polaris Consultants Ribbon Star Logo.png'];
+            let idx = parseInt(img.dataset.try || '0');
+            if (idx < alternatives.length) {
+                img.dataset.try = idx + 1;
+                img.src = alternatives[idx];
             } else {
                 img.style.display = 'none';
             }
@@ -637,10 +639,10 @@
             toggleTicketSection();
 
             const formCard = document.getElementById('formCard');
-            formCard.classList.add('border-amber-500', 'bg-amber-50/30');
-            document.getElementById('formTitle').innerHTML = `<i class="fas fa-edit text-amber-600 mr-2"></i>Editing Client: <span class="text-red-600">${r.customerName}</span> (${r.id})`;
-            document.getElementById('submitBtn').classList.replace('bg-red-600', 'bg-amber-600');
-            document.getElementById('submitBtn').classList.replace('hover:bg-red-700', 'hover:bg-amber-700');
+            formCard.classList.add('border-orange-500', 'bg-orange-50/30');
+            document.getElementById('formTitle').innerHTML = `<i class="fas fa-edit text-orange-600 mr-2"></i>Editing Client: <span class="text-red-600">${r.customerName}</span> (${r.id})`;
+            document.getElementById('submitBtn').classList.replace('bg-red-600', 'bg-orange-600');
+            document.getElementById('submitBtn').classList.replace('hover:bg-red-700', 'hover:bg-orange-700');
             document.getElementById('submitBtnText').innerText = 'Update Client Data';
             document.getElementById('cancelEditBtn').classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -662,10 +664,10 @@
             document.getElementById('entryDate').value = new Date().toISOString().slice(0, 10);
             document.getElementById('ticketFormSection').classList.add('hidden');
             const formCard = document.getElementById('formCard');
-            formCard.classList.remove('border-amber-500', 'bg-amber-50/30');
+            formCard.classList.remove('border-orange-500', 'bg-orange-50/30');
             document.getElementById('formTitle').innerHTML = `<i class="fas fa-user-plus text-red-600 mr-2"></i>Add New Client Record`;
-            document.getElementById('submitBtn').classList.replace('bg-amber-600', 'bg-red-600');
-            document.getElementById('submitBtn').classList.replace('hover:bg-amber-700', 'hover:bg-red-700');
+            document.getElementById('submitBtn').classList.replace('bg-orange-600', 'bg-red-600');
+            document.getElementById('submitBtn').classList.replace('hover:bg-orange-700', 'hover:bg-red-700');
             document.getElementById('submitBtnText').innerText = 'Save Record';
             document.getElementById('cancelEditBtn').classList.add('hidden');
         }
@@ -674,7 +676,7 @@
         function getStatusColor(status) {
             if (status === 'Complete') return 'bg-emerald-100 text-emerald-800 border-emerald-300';
             if (status === 'Rejected') return 'bg-red-100 text-red-800 border-red-300';
-            return 'bg-amber-100 text-amber-800 border-amber-300';
+            return 'bg-orange-100 text-orange-800 border-orange-300';
         }
 
         // Update All UI Sections
@@ -757,7 +759,7 @@
                     } else {
                         const runningDays = calculateDuration(r.date, null);
                         ticketCellHtml = `
-                            <select onchange="quickUpdateField('${r.id}', 'ticketStatus', this.value)" class="text-[11px] font-bold px-2 py-0.5 rounded-full border cursor-pointer bg-amber-100 text-amber-800 border-amber-300">
+                            <select onchange="quickUpdateField('${r.id}', 'ticketStatus', this.value)" class="text-[11px] font-bold px-2 py-0.5 rounded-full border cursor-pointer bg-orange-100 text-orange-800 border-orange-300">
                                 <option value="Pending" selected>Pending</option>
                                 <option value="Complete">Complete</option>
                             </select>
@@ -773,7 +775,7 @@
                     <td class="px-3 py-3 whitespace-nowrap">
                         <div class="font-bold text-gray-800">${r.id}</div>
                         <div class="text-[11px] text-gray-500"><i class="far fa-calendar-alt mr-1"></i>${formatDisplayDate(r.date)}</div>
-                        <div class="font-bold text-blue-700 mt-0.5"><i class="fas fa-user-tie mr-1"></i>${r.agentName}</div>
+                        <div class="font-bold text-sky-700 mt-0.5"><i class="fas fa-user-tie mr-1"></i>${r.agentName}</div>
                     </td>
                     <td class="px-3 py-3">
                         <div class="font-bold text-gray-900 text-sm">${r.customerName}</div>
@@ -785,7 +787,7 @@
                         <div><span class="font-semibold">Cell:</span> ${r.contactNo}</div>
                     </td>
                     <td class="px-3 py-3">
-                        <span class="px-2 py-0.5 text-[11px] font-semibold rounded bg-indigo-50 text-indigo-700">${r.visaType}</span>
+                        <span class="px-2 py-0.5 text-[11px] font-semibold rounded bg-sky-50 text-sky-700">${r.visaType}</span>
                         <div class="text-[11px] text-gray-600 font-medium mt-1">${r.country}</div>
                     </td>
                     <td class="px-3 py-3 text-center">
@@ -820,11 +822,11 @@
                     </td>
                     <td class="px-3 py-3 text-center whitespace-nowrap">
                         <div class="flex flex-col gap-1 items-center">
-                            <button onclick="openClientSlip('${r.id}')" class="w-full bg-gray-800 hover:bg-black text-white px-2.5 py-1 rounded text-[11px] font-semibold flex items-center justify-center gap-1" title="Client Slip with QR">
+                            <button onclick="openClientSlip('${r.id}')" class="w-full bg-gray-900 hover:bg-black text-white px-2.5 py-1 rounded text-[11px] font-semibold flex items-center justify-center gap-1" title="Client Slip with QR">
                                 <i class="fas fa-qrcode"></i> QR Slip
                             </button>
                             <div class="flex gap-1 w-full">
-                                <button onclick="editRecord('${r.id}')" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-[11px] font-semibold" title="Edit Full Record">
+                                <button onclick="editRecord('${r.id}')" class="flex-1 bg-sky-600 hover:bg-sky-700 text-white px-2 py-1 rounded text-[11px] font-semibold" title="Edit Full Record">
                                     <i class="fas fa-edit"></i> Edit
                                 </button>
                                 <button onclick="deleteRecord('${r.id}')" class="bg-red-100 hover:bg-red-600 text-red-600 hover:text-white px-2 py-1 rounded text-[11px]" title="Delete">
@@ -871,13 +873,13 @@
             tbody.innerHTML = agents.map(a => `
                 <tr class="hover:bg-gray-50">
                     <td class="px-4 py-3 font-bold text-gray-900">${a.name}</td>
-                    <td class="px-4 py-3 text-center font-bold text-blue-600">${a.total}</td>
+                    <td class="px-4 py-3 text-center font-bold text-sky-600">${a.total}</td>
                     <td class="px-4 py-3 text-center text-xs">${a.study} / ${a.work} / ${a.azaad}</td>
                     <td class="px-4 py-3 text-center text-emerald-600 font-semibold">${a.visaComp}</td>
                     <td class="px-4 py-3 text-center text-purple-600 font-semibold">${a.ticketsDone}</td>
-                    <td class="px-4 py-3 text-center text-amber-600 font-semibold">${a.visaPend}</td>
+                    <td class="px-4 py-3 text-center text-orange-600 font-semibold">${a.visaPend}</td>
                     <td class="px-4 py-3 text-center text-red-600 font-semibold">${a.visaRej}</td>
-                    <td class="px-4 py-3 text-center text-xs font-semibold"><span class="text-emerald-600">${a.payComp}</span> / <span class="text-amber-600">${a.payPend}</span></td>
+                    <td class="px-4 py-3 text-center text-xs font-semibold"><span class="text-emerald-600">${a.payComp}</span> / <span class="text-orange-600">${a.payPend}</span></td>
                     <td class="px-4 py-3 text-center">
                         <button onclick="openAgentSlip('${a.name.replace(/'/g, "\\'")}')" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded text-xs font-semibold shadow flex items-center gap-1 mx-auto">
                             <i class="fas fa-qrcode"></i> Agent Slip
@@ -913,31 +915,31 @@
                     <div><span class="text-gray-500">CNIC No:</span> <strong class="text-gray-900 block">${r.cnic}</strong></div>
                     <div><span class="text-gray-500">Passport No:</span> <strong class="text-gray-900 block font-mono">${r.passportNo}</strong></div>
                     <div><span class="text-gray-500">Contact No:</span> <strong class="text-gray-900 block">${r.contactNo}</strong></div>
-                    <div><span class="text-gray-500">Visa Category:</span> <strong class="text-indigo-700 block">${r.visaType} (${r.country})</strong></div>
+                    <div><span class="text-gray-500">Visa Category:</span> <strong class="text-sky-700 block">${r.visaType} (${r.country})</strong></div>
                     <div><span class="text-gray-500">Client Entry Date:</span> <strong class="text-gray-900 block">${formatDisplayDate(r.date)}</strong></div>
                 </div>
 
                 <div class="mt-4 grid grid-cols-2 sm:grid-cols-5 gap-2 text-center">
                     <div class="p-2.5 border rounded-lg">
                         <span class="text-[11px] text-gray-500 block">Payment</span>
-                        <strong class="text-xs ${r.paymentStatus === 'Complete' ? 'text-emerald-600' : 'text-amber-600'}">${r.paymentStatus}</strong>
+                        <strong class="text-xs ${r.paymentStatus === 'Complete' ? 'text-emerald-600' : 'text-orange-600'}">${r.paymentStatus}</strong>
                     </div>
                     <div class="p-2.5 border rounded-lg">
                         <span class="text-[11px] text-gray-500 block">Visa Status</span>
-                        <strong class="text-xs ${r.visaStatus === 'Complete' ? 'text-emerald-600' : (r.visaStatus === 'Rejected' ? 'text-red-600' : 'text-amber-600')}">${r.visaStatus}</strong>
+                        <strong class="text-xs ${r.visaStatus === 'Complete' ? 'text-emerald-600' : (r.visaStatus === 'Rejected' ? 'text-red-600' : 'text-orange-600')}">${r.visaStatus}</strong>
                     </div>
                     <div class="p-2.5 border rounded-lg">
                         <span class="text-[11px] text-gray-500 block">Reference</span>
-                        <strong class="text-xs ${r.refStatus === 'Complete' ? 'text-emerald-600' : 'text-amber-600'}">${r.refStatus}</strong>
+                        <strong class="text-xs ${r.refStatus === 'Complete' ? 'text-emerald-600' : 'text-orange-600'}">${r.refStatus}</strong>
                         ${r.refNumber ? `<span class="block text-[11px] font-mono font-bold text-gray-900 mt-0.5">${r.refNumber}</span>` : ''}
                     </div>
                     <div class="p-2.5 border rounded-lg">
                         <span class="text-[11px] text-gray-500 block">Girish Status</span>
-                        <strong class="text-xs ${r.girishStatus === 'Complete' ? 'text-emerald-600' : 'text-amber-600'}">${r.girishStatus}</strong>
+                        <strong class="text-xs ${r.girishStatus === 'Complete' ? 'text-emerald-600' : 'text-orange-600'}">${r.girishStatus}</strong>
                     </div>
                     <div class="p-2.5 border rounded-lg bg-purple-50 border-purple-200">
                         <span class="text-[11px] text-purple-700 block">Ticket Status</span>
-                        <strong class="text-xs ${hasTicket ? 'text-purple-800' : 'text-amber-600'}">${r.visaStatus === 'Complete' ? (r.ticketStatus || 'Pending') : 'N/A'}</strong>
+                        <strong class="text-xs ${hasTicket ? 'text-purple-800' : 'text-orange-600'}">${r.visaStatus === 'Complete' ? (r.ticketStatus || 'Pending') : 'N/A'}</strong>
                         ${hasTicket ? `<span class="block text-[10px] text-gray-700 mt-0.5">${formatDisplayDate(r.ticketDate)}</span>` : ''}
                     </div>
                 </div>
@@ -949,7 +951,7 @@
                 </div>` : ''}
 
                 ${r.totalAmount > 0 ? `
-                <div class="mt-3 p-3 bg-blue-50 rounded-lg border border-blue-200 flex justify-between text-xs font-semibold">
+                <div class="mt-3 p-3 bg-sky-50 rounded-lg border border-sky-200 flex justify-between text-xs font-semibold">
                     <span>Total Deal: PKR ${r.totalAmount.toLocaleString()}</span>
                     <span class="text-emerald-700">Paid: PKR ${r.paidAmount.toLocaleString()}</span>
                     <span class="text-red-600">Balance: PKR ${balance.toLocaleString()}</span>
@@ -1000,12 +1002,12 @@
                     <div><span class="text-gray-500">Agent Name:</span> <strong class="text-lg text-gray-900 ml-1">${agentName}</strong></div>
                     <div class="text-right text-xs">
                         <span class="block">Total Clients: <strong>${agentClients.length}</strong> | Visas Complete: <strong class="text-emerald-600">${completeVisas}</strong></span>
-                        <span class="block">Tickets Done: <strong class="text-purple-600">${completeTickets}</strong> | Pending Pay: <strong class="text-amber-600">${pendingPayments}</strong></span>
+                        <span class="block">Tickets Done: <strong class="text-purple-600">${completeTickets}</strong> | Pending Pay: <strong class="text-orange-600">${pendingPayments}</strong></span>
                     </div>
                 </div>
 
                 <table class="w-full text-left border-collapse border border-gray-200">
-                    <thead class="bg-gray-800 text-white text-[10px] uppercase">
+                    <thead class="bg-gray-900 text-white text-[10px] uppercase">
                         <tr>
                             <th class="py-1.5 px-1.5">#</th>
                             <th class="py-1.5 px-1.5">Customer & Entry</th>
@@ -1119,7 +1121,7 @@
             XLSX.writeFile(wb, `Polaris_Consultants_Report_${new Date().toISOString().slice(0,10)}.xlsx`);
         }
 
-        // Print Full Report
+        // Print Full Report (Includes logo.png)
         function printFullReport() {
             const win = window.open('', '', 'width=1150,height=700');
             let rows = records.map((r, i) => {
@@ -1147,16 +1149,22 @@
                     <title>Polaris Consultants - Complete Report</title>
                     <style>
                         body { font-family: Arial, sans-serif; padding: 20px; }
-                        h2 { text-align: center; color: #dc2626; margin-bottom: 5px; }
-                        p { text-align: center; font-size: 12px; color: #555; margin-top: 0; }
+                        .header { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 5px; }
+                        .header img { height: 50px; width: auto; }
+                        h2 { color: #111827; margin: 0; font-size: 22px; font-weight: 900; }
+                        h2 span { color: #dc2626; }
+                        p { text-align: center; font-size: 12px; color: #555; margin-top: 4px; }
                         table { width: 100%; border-collapse: collapse; font-size: 10px; margin-top: 15px; }
                         th, td { border: 1px solid #333; padding: 5px; text-align: left; }
                         th { background-color: #111827; color: white; }
                     </style>
                 </head>
                 <body>
-                    <h2>POLARIS CONSULTANTS - COMPLETE CLIENT & AGENT REPORT</h2>
-                    <p>Generated on: ${new Date().toLocaleString()} | Total Records: ${records.length}</p>
+                    <div class="header">
+                        <img src="logo.png" onerror="this.style.display='none'">
+                        <h2>POLARIS <span>CONSULTANTS</span></h2>
+                    </div>
+                    <p>Complete Client & Agent Report | Generated on: ${new Date().toLocaleString()} | Total Records: ${records.length}</p>
                     <table>
                         <thead>
                             <tr>

@@ -105,65 +105,75 @@
 
     <div class="max-w-[98%] mx-auto px-3 py-6">
         
-        <!-- Dashboard Summary Cards (Matched to Logo Colors) -->
-        <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-6">
-            <div class="bg-white rounded-xl shadow p-4 border-l-4 border-sky-600">
+        <!-- Dashboard Summary Cards (7 Boxes: Total Visas Complete + Pending Visa + Rejected = Total Clients) -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 mb-6">
+            <div class="bg-white rounded-xl shadow p-3.5 border-l-4 border-sky-600">
                 <div class="flex justify-between items-center">
                     <div>
                         <p class="text-[11px] font-semibold text-gray-500 uppercase">Total Agents</p>
                         <h3 class="text-2xl font-bold text-gray-900 mt-1" id="statTotalAgents">0</h3>
                     </div>
-                    <div class="p-2.5 bg-sky-50 rounded-full text-sky-600"><i class="fas fa-user-tie text-lg"></i></div>
+                    <div class="p-2 bg-sky-50 rounded-full text-sky-600"><i class="fas fa-user-tie text-base"></i></div>
                 </div>
             </div>
 
-            <div class="bg-white rounded-xl shadow p-4 border-l-4 border-blue-700">
+            <div class="bg-white rounded-xl shadow p-3.5 border-l-4 border-blue-700">
                 <div class="flex justify-between items-center">
                     <div>
                         <p class="text-[11px] font-semibold text-gray-500 uppercase">Total Clients</p>
                         <h3 class="text-2xl font-bold text-gray-900 mt-1" id="statTotalClients">0</h3>
                     </div>
-                    <div class="p-2.5 bg-blue-50 rounded-full text-blue-700"><i class="fas fa-users text-lg"></i></div>
+                    <div class="p-2 bg-blue-50 rounded-full text-blue-700"><i class="fas fa-users text-base"></i></div>
                 </div>
             </div>
 
-            <div class="bg-white rounded-xl shadow p-4 border-l-4 border-emerald-600">
+            <div class="bg-white rounded-xl shadow p-3.5 border-l-4 border-emerald-600">
                 <div class="flex justify-between items-center">
                     <div>
                         <p class="text-[11px] font-semibold text-gray-500 uppercase">Visas Complete</p>
                         <h3 class="text-2xl font-bold text-emerald-600 mt-1" id="statVisaComplete">0</h3>
                     </div>
-                    <div class="p-2.5 bg-emerald-50 rounded-full text-emerald-600"><i class="fas fa-passport text-lg"></i></div>
+                    <div class="p-2 bg-emerald-50 rounded-full text-emerald-600"><i class="fas fa-passport text-base"></i></div>
                 </div>
             </div>
 
-            <div class="bg-white rounded-xl shadow p-4 border-l-4 border-purple-600">
+            <div class="bg-white rounded-xl shadow p-3.5 border-l-4 border-amber-500">
                 <div class="flex justify-between items-center">
                     <div>
-                        <p class="text-[11px] font-semibold text-gray-500 uppercase">Tickets Done</p>
-                        <h3 class="text-2xl font-bold text-purple-600 mt-1" id="statTicketsComplete">0</h3>
+                        <p class="text-[11px] font-semibold text-gray-500 uppercase">Pending Visa</p>
+                        <h3 class="text-2xl font-bold text-amber-600 mt-1" id="statVisaPending">0</h3>
                     </div>
-                    <div class="p-2.5 bg-purple-50 rounded-full text-purple-600"><i class="fas fa-plane-departure text-lg"></i></div>
+                    <div class="p-2 bg-amber-50 rounded-full text-amber-600"><i class="fas fa-hourglass-half text-base"></i></div>
                 </div>
             </div>
 
-            <div class="bg-white rounded-xl shadow p-4 border-l-4 border-orange-500">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <p class="text-[11px] font-semibold text-gray-500 uppercase">Pending Pay</p>
-                        <h3 class="text-2xl font-bold text-orange-600 mt-1" id="statPaymentPending">0</h3>
-                    </div>
-                    <div class="p-2.5 bg-orange-50 rounded-full text-orange-600"><i class="fas fa-clock text-lg"></i></div>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-xl shadow p-4 border-l-4 border-red-600">
+            <div class="bg-white rounded-xl shadow p-3.5 border-l-4 border-red-600">
                 <div class="flex justify-between items-center">
                     <div>
                         <p class="text-[11px] font-semibold text-gray-500 uppercase">Rejected</p>
                         <h3 class="text-2xl font-bold text-red-600 mt-1" id="statVisaRejected">0</h3>
                     </div>
-                    <div class="p-2.5 bg-red-50 rounded-full text-red-600"><i class="fas fa-times-circle text-lg"></i></div>
+                    <div class="p-2 bg-red-50 rounded-full text-red-600"><i class="fas fa-times-circle text-base"></i></div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow p-3.5 border-l-4 border-purple-600">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-[11px] font-semibold text-gray-500 uppercase">Tickets Done</p>
+                        <h3 class="text-2xl font-bold text-purple-600 mt-1" id="statTicketsComplete">0</h3>
+                    </div>
+                    <div class="p-2 bg-purple-50 rounded-full text-purple-600"><i class="fas fa-plane-departure text-base"></i></div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow p-3.5 border-l-4 border-orange-500">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-[11px] font-semibold text-gray-500 uppercase">Pending Pay</p>
+                        <h3 class="text-2xl font-bold text-orange-600 mt-1" id="statPaymentPending">0</h3>
+                    </div>
+                    <div class="p-2 bg-orange-50 rounded-full text-orange-600"><i class="fas fa-clock text-base"></i></div>
                 </div>
             </div>
         </div>
@@ -781,9 +791,10 @@
             document.getElementById('statTotalAgents').innerText = uniqueAgents.length;
             document.getElementById('statTotalClients').innerText = records.length;
             document.getElementById('statVisaComplete').innerText = records.filter(r => r.visaStatus === 'Complete').length;
+            document.getElementById('statVisaPending').innerText = records.filter(r => r.visaStatus === 'Pending').length;
+            document.getElementById('statVisaRejected').innerText = records.filter(r => r.visaStatus === 'Rejected').length;
             document.getElementById('statTicketsComplete').innerText = records.filter(r => r.visaStatus === 'Complete' && r.ticketStatus === 'Complete').length;
             document.getElementById('statPaymentPending').innerText = records.filter(r => r.paymentStatus === 'Pending').length;
-            document.getElementById('statVisaRejected').innerText = records.filter(r => r.visaStatus === 'Rejected').length;
         }
 
         // Populate Agent Datalist & Filter Dropdown

@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polaris Consultants - Agent & Client Portal</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- SheetJS for Excel Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- QRCode.js for Slip QR Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        
+        /* Print Styles for Slip & Table */
+        @media print {
+            body * { visibility: hidden; }
+            #printableArea, #printableArea * { visibility: visible; }
+            #printableArea {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                background: white;
+                padding: 20px;
+                box-shadow: none !important;
+            }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md border-b-4 border-red-600 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center space-x-4">
+                    <img src="logo.png" alt="Polaris Consultants" onerror="this.src='https://via.placeholder.com/60x60?text=PC'" class="h-14 w-auto object-contain">
+                    <div>
+                        <h1 class="text-2xl font-extrabold tracking-wider text-gray-900">POLARIS <span class="text-red-600">CONSULTANTS.</span></h1>
+                        <p class="text-xs text-gray-500 font-medium">Agent & Client Visa Management System</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="exportToExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-sm font-medium shadow flex items-center gap-2 transition">
+                        <i class="fas fa-file-excel"></i> Export Excel
+                    </button>
+                    <button onclick="printFullReport()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm font-medium shadow flex items-center gap-2 transition">
+                        <i class="fas fa-print"></i> Print Report
+                    </button>
+                    <button onclick="downloadBackup()" class="bg-gray-700 hover:bg-gray-800 text-white px-3 py-2 rounded-lg text-sm font-medium shadow flex items-center gap-2 transition" title="Save Backup File">
+                        <i class="fas fa-download"></i> Backup
+                    </button>
+                    <label class="bg-amber-600 hover:bg-amber-700 text-white px-3 py-2 rounded-lg text-sm font-medium shadow flex items-center gap-2 cursor-pointer transition" title="Restore Backup File">
+                        <i class="fas fa-upload"></i> Restore
+                        <input type="file" id="restoreFile" accept=".json" class="hidden" onchange="restoreBackup(event)">
+                    </label>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        
+        <!-- Dashboard Summary Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+            <div class="bg-white rounded-xl shadow p-5 border-l-4 border-blue-600">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-xs font-semibold text-gray-500 uppercase">Total Agents</p>
+                        <h3 class="text-2xl font-bold text-gray-900 mt-1" id="statTotalAgents">0</h3>
+                    </div>
+                    <div class="p-3 bg-blue-50 rounded-full text-blue-600"><i class="fas fa-user-tie text-xl"></i></div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow p-5 border-l-4 border-indigo-600">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-xs font-semibold text-gray-500 uppercase">Total Clients</p>
+                        <h3 class="text-2xl font-bold text-gray-900 mt-1" id="statTotalClients">0</h3>
+                    </div>
+                    <div class="p-3 bg-indigo-50 rounded-full text-indigo-600"><i class="fas fa-users text-xl"></i></div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow p-5 border-l-4 border-emerald-600">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-xs font-semibold text-gray-500 uppercase">Visas Complete</p>
+                        <h3 class="text-2xl font-bold text-emerald-600 mt-1" id="statVisaComplete">0</h3>
+                    </div>
+                    <div class="p-3 bg-emerald-50 rounded-full text-emerald-600"><i class="fas fa-passport text-xl"></i></div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow p-5 border-l-4 border-amber-500">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-xs font-semibold text-gray-500 uppercase">Pending Payments</p>
+                        <h3 class="text-2xl font-bold text-amber-600 mt-1" id="statPaymentPending">0</h3>
+                    </div>
+                    <div class="p-3 bg-amber-50 rounded-full text-amber-600"><i class="fas fa-clock text-xl"></i></div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow p-5 border-l-4 border-red-600">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-xs font-semibold text-gray-500 uppercase">Rejected Cases</p>
+                        <h3 class="text-2xl font-bold text-red-600 mt-1" id="statVisaRejected">0</h3>
+                    </div>
+                    <div class="p-3 bg-red-50 rounded-full text-red-600"><i class="fas fa-times-circle text-xl"></i></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs Navigation -->
+        <div class="flex border-b border-gray-200 mb-6 bg-white rounded-t-xl px-4 pt-2 shadow-sm">
+            <button onclick="switchTab('entryTab')" id="btnEntryTab" class="py-3 px-6 font-semibold text-sm border-b-2 border-red-600 text-red-600 flex items-center gap-2">
+                <i class="fas fa-plus-circle"></i> Client Entry & Records
+            </button>
+            <button onclick="switchTab('agentSummaryTab')" id="btnAgentSummaryTab" class="py-3 px-6 font-semibold text-sm border-b-2 border-transparent text-gray-500 hover:text-gray-700 flex items-center gap-2">
+                <i class="fas fa-chart-pie"></i> Agent-Wise Summary & Slips
+            </button>
+        </div>
+
+        <!-- TAB 1: CLIENT ENTRY & RECORDS -->
+        <div id="entryTab">
+            <!-- Form Card -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+                <div class="flex justify-between items-center border-b pb-3 mb-5">
+                    <h2 class="text-lg font-bold text-gray-800" id="formTitle"><i class="fas fa-user-plus text-red-600 mr-2"></i>Add New Client Record</h2>
+                    <button type="button" onclick="resetForm()" id="cancelEditBtn" class="hidden text-xs bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded">Cancel Edit</button>
+                </div>
+
+                <form id="clientForm" onsubmit="saveClient(event)" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <input type="hidden" id="editId">
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Agent Name *</label>
+                        <input type="text" id="agentName" list="agentSuggestions" required placeholder="e.g. Ali Raza" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                        <datalist id="agentSuggestions"></datalist>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Customer Name *</label>
+                        <input type="text" id="customerName" required placeholder="Full Name" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Father Name *</label>
+                        <input type="text" id="fatherName" required placeholder="Father's Name" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">CNIC No *</label>
+                        <input type="text" id="cnic" required placeholder="35202-1234567-1" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Passport No *</label>
+                        <input type="text" id="passportNo" required placeholder="AB1234567" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm uppercase focus:ring-2 focus:ring-red-500 focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Contact No *</label>
+                        <input type="text" id="contactNo" required placeholder="0300-1234567" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Country (Optional)</label>
+                        <input type="text" id="country" placeholder="e.g. Turkey, Germany, UK" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Visa Category *</label>
+                        <select id="visaType" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
+                            <option value="Study Visa">Study Visa</option>
+                            <option value="Work Visa">Work Visa</option>
+                            <option value="Azaad Visa">Azaad Visa</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Payment Status *</label>
+                        <select id="paymentStatus" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
+                            <option value="Pending">Pending</option>
+                            <option value="Complete">Complete</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Visa Status *</label>
+                        <select id="visaStatus" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
+                            <option value="Pending">Pending</option>
+                            <option value="Complete">Complete</option>
+                            <option value="Rejected">Rejected</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Reference No Status *</label>
+                        <select id="refStatus" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
+                            <option value="Pending">Pending</option>
+                            <option value="Complete">Complete</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Girish Status *</label>
+                        <select id="girishStatus" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
+                            <option value="Pending">Pending</option>
+                            <option value="Complete">Complete</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Total Deal Amount (PKR)</label>
+                        <input type="number" id="totalAmount" placeholder="0" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Received Amount (PKR)</label>
+                        <input type="number" id="paidAmount" placeholder="0" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                    </div>
+
+                    <div class="md:col-span-2 flex items-end">
+                        <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 px-4 rounded-lg shadow transition flex justify-center items-center gap-2">
+                            <i class="fas fa-save"></i> <span id="submitBtnText">Save Client Record</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Search & Filters -->
+            <div class="bg-white rounded-xl shadow-md p-4 mb-4 flex flex-wrap gap-3 items-center justify-between">
+                <div class="flex flex-wrap gap-3 flex-1">
+                    <div class="relative flex-1 min-w-[200px]">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400 text-sm"></i>
+                        <input type="text" id="searchInput" onkeyup="renderTable()" placeholder="Search Name, Passport, CNIC, Agent..." class="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-red-500">
+                    </div>
+                    <select id="filterAgent" onchange="renderTable()" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white">
+                        <option value="">All Agents</option>
+                    </select>
+                    <select id="filterVisaType" onchange="renderTable()" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white">
+                        <option value="">All Visa Types</option>
+                        <option value="Study Visa">Study Visa</option>
+                        <option value="Work Visa">Work Visa</option>
+                        <option value="Azaad Visa">Azaad Visa</option>
+                    </select>
+                    <select id="filterVisaStatus" onchange="renderTable()" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white">
+                        <option value="">All Visa Status</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Complete">Complete</option>
+                        <option value="Rejected">Rejected</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Clients Data Table -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200 text-sm">
+                        <thead class="bg-gray-900 text-white text-xs uppercase">
+                            <tr>
+                                <th class="px-4 py-3 text-left">ID / Date</th>
+                                <th class="px-4 py-3 text-left">Agent</th>
+                                <th class="px-4 py-3 text-left">Customer & Father</th>
+                                <th class="px-4 py-3 text-left">CNIC & Passport</th>
+                                <th class="px-4 py-3 text-left">Contact</th>
+                                <th class="px-4 py-3 text-left">Visa Info</th>
+                                <th class="px-4 py-3 text-center">Payment</th>
+                                <th class="px-4 py-3 text-center">Visa Status</th>
+                                <th class="px-4 py-3 text-center">Ref / Girish</th>
+                                <th class="px-4 py-3 text-center">Actions & Slip</th>
+                            </tr>
+                        </thead>
+                        <tbody id="clientTableBody" class="divide-y divide-gray-200 bg-white">
+                            <!-- Rows injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: AGENT SUMMARY -->
+        <div id="agentSummaryTab" class="hidden">
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-bold text-gray-800"><i class="fas fa-user-tie text-blue-600 mr-2"></i>Total Agent Performance & Summary</h2>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200 text-sm">
+                        <thead class="bg-gray-800 text-white text-xs uppercase">
+                            <tr>
+                                <th class="px-4 py-3 text-left">Agent Name</th>
+                                <th class="px-4 py-3 text-center">Total Clients</th>
+                                <th class="px-4 py-3 text-center">Study / Work / Azaad</th>
+                                <th class="px-4 py-3 text-center">Visa Complete</th>
+                                <th class="px-4 py-3 text-center">Visa Pending</th>
+                                <th class="px-4 py-3 text-center">Rejected</th>
+                                <th class="px-4 py-3 text-center">Payment Complete</th>
+                                <th class="px-4 py-3 text-center">Payment Pending</th>
+                                <th class="px-4 py-3 text-center">Agent Slip</th>
+                            </tr>
+                        </thead>
+                        <tbody id="agentSummaryBody" class="divide-y divide-gray-200">
+                            <!-- Agent summary injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MODAL FOR SLIP WITH QR CODE -->
+    <div id="slipModal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div class="flex justify-between items-center p-4 border-b bg-gray-50 rounded-t-2xl no-print">
+                <h3 class="font-bold text-gray-800"><i class="fas fa-receipt text-red-600 mr-2"></i>Official Slip Preview</h3>
+                <div class="flex gap-2">
+                    <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-lg text-sm font-semibold shadow flex items-center gap-2">
+                        <i class="fas fa-print"></i> Print Slip
+                    </button>
+                    <button onclick="closeSlipModal()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-3 py-1.5 rounded-lg text-sm font-semibold">
+                        Close
+                    </button>
+                </div>
+            </div>
+
+            <!-- Printable Slip Content -->
+            <div id="printableArea" class="p-8 bg-white">
+                <!-- Slip Header -->
+                <div class="flex justify-between items-center border-b-2 border-red-600 pb-4 mb-6">
+                    <div class="flex items-center gap-4">
+                        <img src="logo.png" alt="Polaris Logo" onerror="this.src='https://via.placeholder.com/70x70?text=PC'" class="h-16 w-auto">
+                        <div>
+                            <h1 class="text-2xl font-black tracking-wide text-gray-900">POLARIS <span class="text-red-600">CONSULTANTS.</span></h1>
+                            <p class="text-xs text-gray-600">Study Visa | Work Visa | Azaad Visa Consultancy</p>
+                            <p class="text-xs text-gray-500">Johar Town, Lahore, Pakistan</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span id="slipTypeBadge" class="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded uppercase">CLIENT RECEIPT</span>
+                        <p class="text-xs text-gray-500 mt-2">Date: <span id="slipDate" class="font-semibold text-gray-800"></span></p>
+                        <p class="text-xs text-gray-500">Slip ID: <span id="slipId" class="font-semibold text-gray-800"></span></p>
+                    </div>
+                </div>
+
+                <!-- Dynamic Slip Body -->
+                <div id="slipDynamicContent"></div>
+
+                <!-- QR Code & Verification Footer -->
+                <div class="mt-8 pt-4 border-t border-dashed border-gray-400 flex justify-between items-center">
+                    <div class="text-xs text-gray-600 space-y-1 max-w-sm">
+                        <p class="font-bold text-gray-800">Scan QR Code to Verify Record Details</p>
+                        <p>This is a computer-generated receipt from Polaris Consultants Portal. All statuses (Payment, Visa, Reference & Girish) are encoded in the QR code.</p>
+                        <div class="pt-6">
+                            <span class="border-t border-gray-800 px-4 pt-1 text-gray-800 font-semibold">Authorized Signature & Stamp</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div id="qrcode" class="p-2 border border-gray-300 rounded-lg bg-white"></div>
+                        <span class="text-[10px] text-gray-400 mt-1">Polaris Verified QR</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // LocalStorage Key
+        const STORAGE_KEY = 'polaris_consultants_data_v1';
+        let records = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            updateUI();
+        });
+
+        // Save or Update Client
+        function saveClient(e) {
+            e.preventDefault();
+            const editId = document.getElementById('editId').value;
+
+            const record = {
+                id: editId ? editId : 'PC-' + Date.now().toString().slice(-6),
+                date: editId ? records.find(r => r.id === editId).date : new Date().toLocaleDateString('en-GB'),
+                agentName: document.getElementById('agentName').value.trim(),
+                customerName: document.getElementById('customerName').value.trim(),
+                fatherName: document.getElementById('fatherName').value.trim(),
+                cnic: document.getElementById('cnic').value.trim(),
+                passportNo: document.getElementById('passportNo').value.trim().toUpperCase(),
+                contactNo: document.getElementById('contactNo').value.trim(),
+                country: document.getElementById('country').value.trim() || 'N/A',
+                visaType: document.getElementById('visaType').value,
+                paymentStatus: document.getElementById('paymentStatus').value,
+                visaStatus: document.getElementById('visaStatus').value,
+                refStatus: document.getElementById('refStatus').value,
+                girishStatus: document.getElementById('girishStatus').value,
+                totalAmount: Number(document.getElementById('totalAmount').value) || 0,
+                paidAmount: Number(document.getElementById('paidAmount').value) || 0
+            };
+
+            if (editId) {
+                const index = records.findIndex(r => r.id === editId);
+                records[index] = record;
+            } else {
+                records.unshift(record);
+            }
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+            resetForm();
+            updateUI();
+        }
+
+        // Edit Record
+        function editRecord(id) {
+            const r = records.find(item => item.id === id);
+            if (!r) return;
+
+            document.getElementById('editId').value = r.id;
+            document.getElementById('agentName').value = r.agentName;
+            document.getElementById('customerName').value = r.customerName;
+            document.getElementById('fatherName').value = r.fatherName;
+            document.getElementById('cnic').value = r.cnic;
+            document.getElementById('passportNo').value = r.passportNo;
+            document.getElementById('contactNo').value = r.contactNo;
+            document.getElementById('country').value = r.country === 'N/A' ? '' : r.country;
+            document.getElementById('visaType').value = r.visaType;
+            document.getElementById('paymentStatus').value = r.paymentStatus;
+            document.getElementById('visaStatus').value = r.visaStatus;
+            document.getElementById('refStatus').value = r.refStatus;
+            document.getElementById('girishStatus').value = r.girishStatus;
+            document.getElementById('totalAmount').value = r.totalAmount;
+            document.getElementById('paidAmount').value = r.paidAmount;
+
+            document.getElementById('formTitle').innerHTML = `<i class="fas fa-edit text-amber-600 mr-2"></i>Edit Client Record (${r.id})`;
+            document.getElementById('submitBtnText').innerText = 'Update Record';
+            document.getElementById('cancelEditBtn').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Delete Record
+        function deleteRecord(id) {
+            if (confirm('Are you sure you want to delete this client record?')) {
+                records = records.filter(r => r.id !== id);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+                updateUI();
+            }
+        }
+
+        // Reset Form
+        function resetForm() {
+            document.getElementById('clientForm').reset();
+            document.getElementById('editId').value = '';
+            document.getElementById('formTitle').innerHTML = `<i class="fas fa-user-plus text-red-600 mr-2"></i>Add New Client Record`;
+            document.getElementById('submitBtnText').innerText = 'Save Client Record';
+            document.getElementById('cancelEditBtn').classList.add('hidden');
+        }
+
+        // Badge Helper
+        function getBadge(status) {
+            if (status === 'Complete') return `<span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-emerald-100 text-emerald-800">Complete</span>`;
+            if (status === 'Rejected') return `<span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-red-100 text-red-800">Rejected</span>`;
+            return `<span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-amber-100 text-amber-800">Pending</span>`;
+        }
+
+        // Update All UI Sections
+        function updateUI() {
+            updateStats();
+            populateAgentFilters();
+            renderTable();
+            renderAgentSummary();
+        }
+
+        // Update Top Summary Cards
+        function updateStats() {
+            const uniqueAgents = [...new Set(records.map(r => r.agentName.toLowerCase()))];
+            document.getElementById('statTotalAgents').innerText = uniqueAgents.length;
+            document.getElementById('statTotalClients').innerText = records.length;
+            document.getElementById('statVisaComplete').innerText = records.filter(r => r.visaStatus === 'Complete').length;
+            document.getElementById('statPaymentPending').innerText = records.filter(r => r.paymentStatus === 'Pending').length;
+            document.getElementById('statVisaRejected').innerText = records.filter(r => r.visaStatus === 'Rejected').length;
+        }
+
+        // Populate Agent Datalist & Filter Dropdown
+        function populateAgentFilters() {
+            const agents = [...new Set(records.map(r => r.agentName))].sort();
+            const datalist = document.getElementById('agentSuggestions');
+            const filterSelect = document.getElementById('filterAgent');
+            const currentFilter = filterSelect.value;
+
+            datalist.innerHTML = agents.map(a => `<option value="${a}">`).join('');
+            filterSelect.innerHTML = `<option value="">All Agents (${agents.length})</option>` + 
+                agents.map(a => `<option value="${a}">${a}</option>`).join('');
+            filterSelect.value = currentFilter;
+        }
+
+        // Render Main Client Table
+        function renderTable() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const agentFilter = document.getElementById('filterAgent').value;
+            const visaTypeFilter = document.getElementById('filterVisaType').value;
+            const visaStatusFilter = document.getElementById('filterVisaStatus').value;
+
+            const filtered = records.filter(r => {
+                const matchSearch = r.customerName.toLowerCase().includes(search) ||
+                                    r.agentName.toLowerCase().includes(search) ||
+                                    r.passportNo.toLowerCase().includes(search) ||
+                                    r.cnic.toLowerCase().includes(search) ||
+                                    r.contactNo.includes(search);
+                const matchAgent = !agentFilter || r.agentName === agentFilter;
+                const matchType = !visaTypeFilter || r.visaType === visaTypeFilter;
+                const matchStatus = !visaStatusFilter || r.visaStatus === visaStatusFilter;
+                return matchSearch && matchAgent && matchType && matchStatus;
+            });
+
+            const tbody = document.getElementById('clientTableBody');
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="10" class="text-center py-8 text-gray-400">No client records found.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(r => `
+                <tr class="hover:bg-gray-50 transition">
+                    <td class="px-4 py-3 whitespace-nowrap">
+                        <div class="font-bold text-gray-800">${r.id}</div>
+                        <div class="text-xs text-gray-400">${r.date}</div>
+                    </td>
+                    <td class="px-4 py-3 font-semibold text-blue-700">${r.agentName}</td>
+                    <td class="px-4 py-3">
+                        <div class="font-bold text-gray-900">${r.customerName}</div>
+                        <div class="text-xs text-gray-500">S/O: ${r.fatherName}</div>
+                    </td>
+                    <td class="px-4 py-3 text-xs">
+                        <div><span class="font-semibold">CNIC:</span> ${r.cnic}</div>
+                        <div><span class="font-semibold">Pass:</span> <span class="uppercase font-mono">${r.passportNo}</span></div>
+                    </td>
+                    <td class="px-4 py-3 text-xs font-medium">${r.contactNo}</td>
+                    <td class="px-4 py-3">
+                        <span class="px-2 py-0.5 text-xs font-semibold rounded bg-indigo-50 text-indigo-700">${r.visaType}</span>
+                        <div class="text-xs text-gray-500 mt-1">${r.country}</div>
+                    </td>
+                    <td class="px-4 py-3 text-center">
+                        ${getBadge(r.paymentStatus)}
+                        ${r.totalAmount > 0 ? `<div class="text-[11px] text-gray-500 mt-1">Bal: ${(r.totalAmount - r.paidAmount).toLocaleString()}</div>` : ''}
+                    </td>
+                    <td class="px-4 py-3 text-center">${getBadge(r.visaStatus)}</td>
+                    <td class="px-4 py-3 text-center text-xs space-y-1">
+                        <div>Ref: ${getBadge(r.refStatus)}</div>
+                        <div>Girish: ${getBadge(r.girishStatus)}</div>
+                    </td>
+                    <td class="px-4 py-3 text-center whitespace-nowrap">
+                        <button onclick="openClientSlip('${r.id}')" class="bg-gray-800 hover:bg-black text-white px-2.5 py-1 rounded text-xs mr-1" title="Client Slip with QR">
+                            <i class="fas fa-qrcode"></i> Slip
+                        </button>
+                        <button onclick="editRecord('${r.id}')" class="text-blue-600 hover:text-blue-800 p-1" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="deleteRecord('${r.id}')" class="text-red-600 hover:text-red-800 p-1" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Render Agent Summary Tab
+        function renderAgentSummary() {
+            const agentMap = {};
+            records.forEach(r => {
+                if (!agentMap[r.agentName]) {
+                    agentMap[r.agentName] = {
+                        name: r.agentName, total: 0, study: 0, work: 0, azaad: 0,
+                        visaComp: 0, visaPend: 0, visaRej: 0, payComp: 0, payPend: 0
+                    };
+                }
+                const a = agentMap[r.agentName];
+                a.total++;
+                if (r.visaType === 'Study Visa') a.study++;
+                if (r.visaType === 'Work Visa') a.work++;
+                if (r.visaType === 'Azaad Visa') a.azaad++;
+                if (r.visaStatus === 'Complete') a.visaComp++;
+                if (r.visaStatus === 'Pending') a.visaPend++;
+                if (r.visaStatus === 'Rejected') a.visaRej++;
+                if (r.paymentStatus === 'Complete') a.payComp++;
+                if (r.paymentStatus === 'Pending') a.payPend++;
+            });
+
+            const tbody = document.getElementById('agentSummaryBody');
+            const agents = Object.values(agentMap);
+
+            if (agents.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="9" class="text-center py-8 text-gray-400">No agent data available.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = agents.map(a => `
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-3 font-bold text-gray-900">${a.name}</td>
+                    <td class="px-4 py-3 text-center font-bold text-blue-600">${a.total}</td>
+                    <td class="px-4 py-3 text-center text-xs">${a.study} / ${a.work} / ${a.azaad}</td>
+                    <td class="px-4 py-3 text-center text-emerald-600 font-semibold">${a.visaComp}</td>
+                    <td class="px-4 py-3 text-center text-amber-600 font-semibold">${a.visaPend}</td>
+                    <td class="px-4 py-3 text-center text-red-600 font-semibold">${a.visaRej}</td>
+                    <td class="px-4 py-3 text-center text-emerald-600 font-semibold">${a.payComp}</td>
+                    <td class="px-4 py-3 text-center text-amber-600 font-semibold">${a.payPend}</td>
+                    <td class="px-4 py-3 text-center">
+                        <button onclick="openAgentSlip('${a.name.replace(/'/g, "\\'")}')" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded text-xs font-semibold shadow flex items-center gap-1 mx-auto">
+                            <i class="fas fa-qrcode"></i> Agent Slip
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Open Individual Client Slip with QR Code
+        function openClientSlip(id) {
+            const r = records.find(item => item.id === id);
+            if (!r) return;
+
+            document.getElementById('slipTypeBadge').innerText = 'CLIENT VISA RECEIPT';
+            document.getElementById('slipDate').innerText = new Date().toLocaleDateString('en-GB');
+            document.getElementById('slipId').innerText = r.id;
+
+            const balance = r.totalAmount - r.paidAmount;
+
+            document.getElementById('slipDynamicContent').innerHTML = `
+                <div class="grid grid-cols-2 gap-4 text-sm bg-gray-50 p-4 rounded-xl border border-gray-200">
+                    <div><span class="text-gray-500">Agent Name:</span> <strong class="text-gray-900 block">${r.agentName}</strong></div>
+                    <div><span class="text-gray-500">Customer Name:</span> <strong class="text-gray-900 block">${r.customerName}</strong></div>
+                    <div><span class="text-gray-500">Father Name:</span> <strong class="text-gray-900 block">${r.fatherName}</strong></div>
+                    <div><span class="text-gray-500">CNIC No:</span> <strong class="text-gray-900 block">${r.cnic}</strong></div>
+                    <div><span class="text-gray-500">Passport No:</span> <strong class="text-gray-900 block font-mono">${r.passportNo}</strong></div>
+                    <div><span class="text-gray-500">Contact No:</span> <strong class="text-gray-900 block">${r.contactNo}</strong></div>
+                    <div><span class="text-gray-500">Visa Category:</span> <strong class="text-indigo-700 block">${r.visaType} (${r.country})</strong></div>
+                    <div><span class="text-gray-500">Entry Date:</span> <strong class="text-gray-900 block">${r.date}</strong></div>
+                </div>
+
+                <div class="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+                    <div class="p-3 border rounded-lg">
+                        <span class="text-xs text-gray-500 block">Payment Status</span>
+                        <strong class="text-sm ${r.paymentStatus === 'Complete' ? 'text-emerald-600' : 'text-amber-600'}">${r.paymentStatus}</strong>
+                    </div>
+                    <div class="p-3 border rounded-lg">
+                        <span class="text-xs text-gray-500 block">Visa Status</span>
+                        <strong class="text-sm ${r.visaStatus === 'Complete' ? 'text-emerald-600' : (r.visaStatus === 'Rejected' ? 'text-red-600' : 'text-amber-600')}">${r.visaStatus}</strong>
+                    </div>
+                    <div class="p-3 border rounded-lg">
+                        <span class="text-xs text-gray-500 block">Reference No</span>
+                        <strong class="text-sm ${r.refStatus === 'Complete' ? 'text-emerald-600' : 'text-amber-600'}">${r.refStatus}</strong>
+                    </div>
+                    <div class="p-3 border rounded-lg">
+                        <span class="text-xs text-gray-500 block">Girish Status</span>
+                        <strong class="text-sm ${r.girishStatus === 'Complete' ? 'text-emerald-600' : 'text-amber-600'}">${r.girishStatus}</strong>
+                    </div>
+                </div>
+
+                ${r.totalAmount > 0 ? `
+                <div class="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200 flex justify-between text-xs font-semibold">
+                    <span>Total Deal: PKR ${r.totalAmount.toLocaleString()}</span>
+                    <span class="text-emerald-700">Paid: PKR ${r.paidAmount.toLocaleString()}</span>
+                    <span class="text-red-600">Balance: PKR ${balance.toLocaleString()}</span>
+                </div>` : ''}
+            `;
+
+            // Generate QR Data with all details
+            const qrText = `POLARIS CONSULTANTS\nID: ${r.id}\nAgent: ${r.agentName}\nClient: ${r.customerName} S/O ${r.fatherName}\nCNIC: ${r.cnic}\nPassport: ${r.passportNo}\nContact: ${r.contactNo}\nVisa: ${r.visaType} (${r.visaStatus})\nPayment: ${r.paymentStatus}\nRef: ${r.refStatus} | Girish: ${r.girishStatus}`;
+
+            generateQR(qrText);
+            document.getElementById('slipModal').classList.remove('hidden');
+        }
+
+        // Open Agent-Wise Consolidated Slip with QR Code
+        function openAgentSlip(agentName) {
+            const agentClients = records.filter(r => r.agentName === agentName);
+            if (agentClients.length === 0) return;
+
+            document.getElementById('slipTypeBadge').innerText = 'AGENT STATEMENT & SLIP';
+            document.getElementById('slipDate').innerText = new Date().toLocaleDateString('en-GB');
+            document.getElementById('slipId').innerText = 'AGT-' + Math.floor(1000 + Math.random() * 9000);
+
+            const completeVisas = agentClients.filter(c => c.visaStatus === 'Complete').length;
+            const pendingPayments = agentClients.filter(c => c.paymentStatus === 'Pending').length;
+
+            let rowsHtml = agentClients.map((c, idx) => `
+                <tr class="border-b text-xs">
+                    <td class="py-1.5 px-2">${idx + 1}</td>
+                    <td class="py-1.5 px-2 font-semibold">${c.customerName}<br><span class="text-[10px] text-gray-500">S/O ${c.fatherName}</span></td>
+                    <td class="py-1.5 px-2 font-mono">${c.passportNo}<br><span class="text-[10px] text-gray-500">${c.cnic}</span></td>
+                    <td class="py-1.5 px-2">${c.visaType}</td>
+                    <td class="py-1.5 px-2 text-center">${c.paymentStatus}</td>
+                    <td class="py-1.5 px-2 text-center">${c.visaStatus}</td>
+                    <td class="py-1.5 px-2 text-center">${c.refStatus} / ${c.girishStatus}</td>
+                </tr>
+            `).join('');
+
+            document.getElementById('slipDynamicContent').innerHTML = `
+                <div class="bg-gray-50 p-3 rounded-lg border mb-4 flex justify-between items-center text-sm">
+                    <div><span class="text-gray-500">Agent Name:</span> <strong class="text-lg text-gray-900 ml-1">${agentName}</strong></div>
+                    <div class="text-right text-xs">
+                        <span class="block">Total Clients: <strong>${agentClients.length}</strong></span>
+                        <span class="block text-emerald-600">Visas Complete: <strong>${completeVisas}</strong></span>
+                        <span class="block text-amber-600">Pending Payments: <strong>${pendingPayments}</strong></span>
+                    </div>
+                </div>
+
+                <table class="w-full text-left border-collapse border border-gray-200">
+                    <thead class="bg-gray-800 text-white text-[11px] uppercase">
+                        <tr>
+                            <th class="py-1.5 px-2">#</th>
+                            <th class="py-1.5 px-2">Customer</th>
+                            <th class="py-1.5 px-2">Passport / CNIC</th>
+                            <th class="py-1.5 px-2">Visa</th>
+                            <th class="py-1.5 px-2 text-center">Payment</th>
+                            <th class="py-1.5 px-2 text-center">Visa St.</th>
+                            <th class="py-1.5 px-2 text-center">Ref / Girish</th>
+                        </tr>
+                    </thead>
+                    <tbody>${rowsHtml}</tbody>
+                </table>
+            `;
+
+            const summaryClients = agentClients.map(c => `${c.customerName}(${c.passportNo}:${c.visaStatus}/${c.paymentStatus})`).join('; ');
+            const qrText = `POLARIS AGENT SLIP\nAgent: ${agentName}\nTotal Clients: ${agentClients.length}\nComplete Visas: ${completeVisas}\nPending Pay: ${pendingPayments}\nDetails: ${summaryClients}`.slice(0, 800);
+
+            generateQR(qrText);
+            document.getElementById('slipModal').classList.remove('hidden');
+        }
+
+        // Generate QR Code
+        function generateQR(text) {
+            const qrContainer = document.getElementById('qrcode');
+            qrContainer.innerHTML = '';
+            new QRCode(qrContainer, {
+                text: text,
+                width: 115,
+                height: 115,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.M
+            });
+        }
+
+        function closeSlipModal() {
+            document.getElementById('slipModal').classList.add('hidden');
+        }
+
+        // Switch Tabs
+        function switchTab(tabId) {
+            document.getElementById('entryTab').classList.add('hidden');
+            document.getElementById('agentSummaryTab').classList.add('hidden');
+            document.getElementById('btnEntryTab').className = 'py-3 px-6 font-semibold text-sm border-b-2 border-transparent text-gray-500 hover:text-gray-700 flex items-center gap-2';
+            document.getElementById('btnAgentSummaryTab').className = 'py-3 px-6 font-semibold text-sm border-b-2 border-transparent text-gray-500 hover:text-gray-700 flex items-center gap-2';
+
+            document.getElementById(tabId).classList.remove('hidden');
+            const activeBtn = tabId === 'entryTab' ? 'btnEntryTab' : 'btnAgentSummaryTab';
+            document.getElementById(activeBtn).className = 'py-3 px-6 font-semibold text-sm border-b-2 border-red-600 text-red-600 flex items-center gap-2';
+        }
+
+        // Export to Excel (2 Sheets: All Clients + Agent Summary)
+        function exportToExcel() {
+            if (records.length === 0) {
+                alert('No data available to export!');
+                return;
+            }
+
+            const clientSheetData = records.map(r => ({
+                'Record ID': r.id,
+                'Date': r.date,
+                'Agent Name': r.agentName,
+                'Customer Name': r.customerName,
+                'Father Name': r.fatherName,
+                'CNIC': r.cnic,
+                'Passport No': r.passportNo,
+                'Contact No': r.contactNo,
+                'Country': r.country,
+                'Visa Category': r.visaType,
+                'Payment Status': r.paymentStatus,
+                'Visa Status': r.visaStatus,
+                'Reference No': r.refStatus,
+                'Girish': r.girishStatus,
+                'Total Amount': r.totalAmount,
+                'Paid Amount': r.paidAmount,
+                'Balance': r.totalAmount - r.paidAmount
+            }));
+
+            const wb = XLSX.utils.book_new();
+            const wsClients = XLSX.utils.json_to_sheet(clientSheetData);
+            XLSX.utils.book_append_sheet(wb, wsClients, 'All Clients');
+
+            // Agent Summary Sheet
+            const agentMap = {};
+            records.forEach(r => {
+                if (!agentMap[r.agentName]) {
+                    agentMap[r.agentName] = { 'Agent Name': r.agentName, 'Total Clients': 0, 'Visa Complete': 0, 'Visa Pending': 0, 'Visa Rejected': 0, 'Payment Complete': 0, 'Payment Pending': 0 };
+                }
+                agentMap[r.agentName]['Total Clients']++;
+                if (r.visaStatus === 'Complete') agentMap[r.agentName]['Visa Complete']++;
+                if (r.visaStatus === 'Pending') agentMap[r.agentName]['Visa Pending']++;
+                if (r.visaStatus === 'Rejected') agentMap[r.agentName]['Visa Rejected']++;
+                if (r.paymentStatus === 'Complete') agentMap[r.agentName]['Payment Complete']++;
+                if (r.paymentStatus === 'Pending') agentMap[r.agentName]['Payment Pending']++;
+            });
+
+            const wsAgents = XLSX.utils.json_to_sheet(Object.values(agentMap));
+            XLSX.utils.book_append_sheet(wb, wsAgents, 'Agent Summary');
+
+            XLSX.writeFile(wb, `Polaris_Consultants_Report_${new Date().toISOString().slice(0,10)}.xlsx`);
+        }
+
+        // Print Full Report
+        function printFullReport() {
+            const win = window.open('', '', 'width=1000,height=700');
+            let rows = records.map((r, i) => `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td>${r.agentName}</td>
+                    <td>${r.customerName}</td>
+                    <td>${r.fatherName}</td>
+                    <td>${r.cnic}</td>
+                    <td>${r.passportNo}</td>
+                    <td>${r.contactNo}</td>
+                    <td>${r.visaType}</td>
+                    <td>${r.paymentStatus}</td>
+                    <td>${r.visaStatus}</td>
+                    <td>${r.refStatus}</td>
+                    <td>${r.girishStatus}</td>
+                </tr>
+            `).join('');
+
+            win.document.write(`
+                <html>
+                <head>
+                    <title>Polaris Consultants - Complete Report</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; }
+                        h2 { text-align: center; color: #dc2626; margin-bottom: 5px; }
+                        p { text-align: center; font-size: 12px; color: #555; margin-top: 0; }
+                        table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 15px; }
+                        th, td { border: 1px solid #333; padding: 6px; text-align: left; }
+                        th { background-color: #111827; color: white; }
+                    </style>
+                </head>
+                <body>
+                    <h2>POLARIS CONSULTANTS - COMPLETE CLIENT & AGENT REPORT</h2>
+                    <p>Generated on: ${new Date().toLocaleString()} | Total Records: ${records.length}</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th><th>Agent</th><th>Customer</th><th>Father Name</th><th>CNIC</th>
+                                <th>Passport</th><th>Contact</th><th>Visa</th><th>Payment</th>
+                                <th>Visa Status</th><th>Ref No</th><th>Girish</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rows}</tbody>
+                    </table>
+                </body>
+                </html>
+            `);
+            win.document.close();
+            win.print();
+        }
+
+        // JSON Backup & Restore (Extra Safety for LocalStorage)
+        function downloadBackup() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(records, null, 2));
+            const a = document.createElement('a');
+            a.href = dataStr;
+            a.download = `Polaris_Backup_${new Date().toISOString().slice(0,10)}.json`;
+            a.click();
+        }
+
+        function restoreBackup(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if (Array.isArray(imported)) {
+                        records = imported;
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+                        updateUI();
+                        alert('Backup restored successfully!');
+                    }
+                } catch (err) {
+                    alert('Invalid backup file!');
+                }
+            };
+            reader.readAsText(file);
+        }
+    </script>
+</body>
+</html>

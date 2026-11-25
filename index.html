@@ -39,10 +39,10 @@
 
     <!-- Navbar -->
     <nav class="bg-white shadow-md border-b-4 border-red-600 sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-[98%] mx-auto px-4">
             <div class="flex justify-between h-20 items-center">
-                <div class="flex items-center space-x-4">
-                    <img src="logo.png" alt="Polaris Consultants" onerror="this.src='https://via.placeholder.com/60x60?text=PC'" class="h-14 w-auto object-contain">
+                <div class="flex items-center space-x-3">
+                    <img src="logo.png" alt="Polaris Consultants" onerror="handleLogoError(this)" class="h-14 w-auto object-contain">
                     <div>
                         <h1 class="text-2xl font-extrabold tracking-wider text-gray-900">POLARIS <span class="text-red-600">CONSULTANTS.</span></h1>
                         <p class="text-xs text-gray-500 font-medium">Agent & Client Visa Management System</p>
@@ -67,11 +67,11 @@
         </div>
     </nav>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div class="max-w-[98%] mx-auto px-3 py-6">
         
         <!-- Dashboard Summary Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
-            <div class="bg-white rounded-xl shadow p-5 border-l-4 border-blue-600">
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
+            <div class="bg-white rounded-xl shadow p-4 border-l-4 border-blue-600">
                 <div class="flex justify-between items-center">
                     <div>
                         <p class="text-xs font-semibold text-gray-500 uppercase">Total Agents</p>
@@ -81,7 +81,7 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-xl shadow p-5 border-l-4 border-indigo-600">
+            <div class="bg-white rounded-xl shadow p-4 border-l-4 border-indigo-600">
                 <div class="flex justify-between items-center">
                     <div>
                         <p class="text-xs font-semibold text-gray-500 uppercase">Total Clients</p>
@@ -91,7 +91,7 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-xl shadow p-5 border-l-4 border-emerald-600">
+            <div class="bg-white rounded-xl shadow p-4 border-l-4 border-emerald-600">
                 <div class="flex justify-between items-center">
                     <div>
                         <p class="text-xs font-semibold text-gray-500 uppercase">Visas Complete</p>
@@ -101,7 +101,7 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-xl shadow p-5 border-l-4 border-amber-500">
+            <div class="bg-white rounded-xl shadow p-4 border-l-4 border-amber-500">
                 <div class="flex justify-between items-center">
                     <div>
                         <p class="text-xs font-semibold text-gray-500 uppercase">Pending Payments</p>
@@ -111,7 +111,7 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-xl shadow p-5 border-l-4 border-red-600">
+            <div class="bg-white rounded-xl shadow p-4 border-l-4 border-red-600">
                 <div class="flex justify-between items-center">
                     <div>
                         <p class="text-xs font-semibold text-gray-500 uppercase">Rejected Cases</p>
@@ -135,10 +135,12 @@
         <!-- TAB 1: CLIENT ENTRY & RECORDS -->
         <div id="entryTab">
             <!-- Form Card -->
-            <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+            <div id="formCard" class="bg-white rounded-xl shadow-md p-6 mb-6 border-2 border-transparent transition-all">
                 <div class="flex justify-between items-center border-b pb-3 mb-5">
                     <h2 class="text-lg font-bold text-gray-800" id="formTitle"><i class="fas fa-user-plus text-red-600 mr-2"></i>Add New Client Record</h2>
-                    <button type="button" onclick="resetForm()" id="cancelEditBtn" class="hidden text-xs bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded">Cancel Edit</button>
+                    <button type="button" onclick="resetForm()" id="cancelEditBtn" class="hidden text-xs bg-red-100 hover:bg-red-200 text-red-700 font-bold px-3 py-1.5 rounded-lg">
+                        <i class="fas fa-times mr-1"></i> Cancel Edit
+                    </button>
                 </div>
 
                 <form id="clientForm" onsubmit="saveClient(event)" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -146,7 +148,7 @@
 
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 mb-1">Agent Name *</label>
-                        <input type="text" id="agentName" list="agentSuggestions" required placeholder="e.g. Ali Raza" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                        <input type="text" id="agentName" list="agentSuggestions" required placeholder="e.g. Asad" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
                         <datalist id="agentSuggestions"></datalist>
                     </div>
 
@@ -207,11 +209,16 @@
                     </div>
 
                     <div>
-                        <label class="block text-xs font-semibold text-gray-700 mb-1">Reference No Status *</label>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Reference Status *</label>
                         <select id="refStatus" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
                             <option value="Pending">Pending</option>
                             <option value="Complete">Complete</option>
                         </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-red-700 mb-1">Reference Number (If Received)</label>
+                        <input type="text" id="refNumber" placeholder="Enter Reference No..." class="w-full border-2 border-red-200 rounded-lg px-3 py-2 text-sm uppercase font-mono focus:ring-2 focus:ring-red-500 focus:outline-none">
                     </div>
 
                     <div>
@@ -232,9 +239,9 @@
                         <input type="number" id="paidAmount" placeholder="0" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
                     </div>
 
-                    <div class="md:col-span-2 flex items-end">
-                        <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 px-4 rounded-lg shadow transition flex justify-center items-center gap-2">
-                            <i class="fas fa-save"></i> <span id="submitBtnText">Save Client Record</span>
+                    <div class="flex items-end">
+                        <button type="submit" id="submitBtn" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 px-4 rounded-lg shadow transition flex justify-center items-center gap-2">
+                            <i class="fas fa-save"></i> <span id="submitBtnText">Save Record</span>
                         </button>
                     </div>
                 </form>
@@ -245,7 +252,7 @@
                 <div class="flex flex-wrap gap-3 flex-1">
                     <div class="relative flex-1 min-w-[200px]">
                         <i class="fas fa-search absolute left-3 top-3 text-gray-400 text-sm"></i>
-                        <input type="text" id="searchInput" onkeyup="renderTable()" placeholder="Search Name, Passport, CNIC, Agent..." class="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-red-500">
+                        <input type="text" id="searchInput" onkeyup="renderTable()" placeholder="Search Name, Passport, CNIC, Ref No, Agent..." class="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-red-500">
                     </div>
                     <select id="filterAgent" onchange="renderTable()" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white">
                         <option value="">All Agents</option>
@@ -263,24 +270,26 @@
                         <option value="Rejected">Rejected</option>
                     </select>
                 </div>
+                <div class="text-xs text-gray-500 font-medium">
+                    <i class="fas fa-info-circle text-blue-500"></i> Tip: Status ko table se seedha change karein ya <b>Edit</b> dabayein
+                </div>
             </div>
 
             <!-- Clients Data Table -->
             <div class="bg-white rounded-xl shadow-md overflow-hidden">
                 <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200 text-sm">
-                        <thead class="bg-gray-900 text-white text-xs uppercase">
+                    <table class="min-w-full divide-y divide-gray-200 text-xs">
+                        <thead class="bg-gray-900 text-white uppercase">
                             <tr>
-                                <th class="px-4 py-3 text-left">ID / Date</th>
-                                <th class="px-4 py-3 text-left">Agent</th>
-                                <th class="px-4 py-3 text-left">Customer & Father</th>
-                                <th class="px-4 py-3 text-left">CNIC & Passport</th>
-                                <th class="px-4 py-3 text-left">Contact</th>
-                                <th class="px-4 py-3 text-left">Visa Info</th>
-                                <th class="px-4 py-3 text-center">Payment</th>
-                                <th class="px-4 py-3 text-center">Visa Status</th>
-                                <th class="px-4 py-3 text-center">Ref / Girish</th>
-                                <th class="px-4 py-3 text-center">Actions & Slip</th>
+                                <th class="px-3 py-3 text-left">ID / Agent</th>
+                                <th class="px-3 py-3 text-left">Customer & Father</th>
+                                <th class="px-3 py-3 text-left">CNIC / Passport / Cell</th>
+                                <th class="px-3 py-3 text-left">Visa Info</th>
+                                <th class="px-3 py-3 text-center">Payment</th>
+                                <th class="px-3 py-3 text-center">Visa Status</th>
+                                <th class="px-3 py-3 text-center">Reference & No</th>
+                                <th class="px-3 py-3 text-center">Girish</th>
+                                <th class="px-3 py-3 text-center">Actions & Slip</th>
                             </tr>
                         </thead>
                         <tbody id="clientTableBody" class="divide-y divide-gray-200 bg-white">
@@ -324,7 +333,7 @@
 
     <!-- MODAL FOR SLIP WITH QR CODE -->
     <div id="slipModal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+        <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
             <div class="flex justify-between items-center p-4 border-b bg-gray-50 rounded-t-2xl no-print">
                 <h3 class="font-bold text-gray-800"><i class="fas fa-receipt text-red-600 mr-2"></i>Official Slip Preview</h3>
                 <div class="flex gap-2">
@@ -342,7 +351,7 @@
                 <!-- Slip Header -->
                 <div class="flex justify-between items-center border-b-2 border-red-600 pb-4 mb-6">
                     <div class="flex items-center gap-4">
-                        <img src="logo.png" alt="Polaris Logo" onerror="this.src='https://via.placeholder.com/70x70?text=PC'" class="h-16 w-auto">
+                        <img src="logo.png" alt="Polaris Logo" onerror="handleLogoError(this)" class="h-16 w-auto object-contain">
                         <div>
                             <h1 class="text-2xl font-black tracking-wide text-gray-900">POLARIS <span class="text-red-600">CONSULTANTS.</span></h1>
                             <p class="text-xs text-gray-600">Study Visa | Work Visa | Azaad Visa Consultancy</p>
@@ -363,7 +372,7 @@
                 <div class="mt-8 pt-4 border-t border-dashed border-gray-400 flex justify-between items-center">
                     <div class="text-xs text-gray-600 space-y-1 max-w-sm">
                         <p class="font-bold text-gray-800">Scan QR Code to Verify Record Details</p>
-                        <p>This is a computer-generated receipt from Polaris Consultants Portal. All statuses (Payment, Visa, Reference & Girish) are encoded in the QR code.</p>
+                        <p>This is a computer-generated receipt from Polaris Consultants Portal. All statuses (Payment, Visa, Reference Number & Girish) are encoded in the QR code.</p>
                         <div class="pt-6">
                             <span class="border-t border-gray-800 px-4 pt-1 text-gray-800 font-semibold">Authorized Signature & Stamp</span>
                         </div>
@@ -378,6 +387,24 @@
     </div>
 
     <script>
+        // Auto Logo Fallback Handler
+        function handleLogoError(img) {
+            const fallbacks = [
+                'Polaris Consultants Ribbon Star Logo.png',
+                'logo.jpg',
+                'logo.jpeg',
+                'Logo.png',
+                'LOGO.png'
+            ];
+            let attempt = parseInt(img.dataset.attempt || '0');
+            if (attempt < fallbacks.length) {
+                img.dataset.attempt = attempt + 1;
+                img.src = fallbacks[attempt];
+            } else {
+                img.style.display = 'none';
+            }
+        }
+
         // LocalStorage Key
         const STORAGE_KEY = 'polaris_consultants_data_v1';
         let records = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
@@ -406,6 +433,7 @@
                 paymentStatus: document.getElementById('paymentStatus').value,
                 visaStatus: document.getElementById('visaStatus').value,
                 refStatus: document.getElementById('refStatus').value,
+                refNumber: document.getElementById('refNumber').value.trim().toUpperCase(),
                 girishStatus: document.getElementById('girishStatus').value,
                 totalAmount: Number(document.getElementById('totalAmount').value) || 0,
                 paidAmount: Number(document.getElementById('paidAmount').value) || 0
@@ -421,6 +449,16 @@
             localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
             resetForm();
             updateUI();
+        }
+
+        // Quick Inline Status Update Directly From Table
+        function quickUpdateField(id, field, value) {
+            const index = records.findIndex(r => r.id === id);
+            if (index !== -1) {
+                records[index][field] = value;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+                updateUI();
+            }
         }
 
         // Edit Record
@@ -440,12 +478,17 @@
             document.getElementById('paymentStatus').value = r.paymentStatus;
             document.getElementById('visaStatus').value = r.visaStatus;
             document.getElementById('refStatus').value = r.refStatus;
+            document.getElementById('refNumber').value = r.refNumber || '';
             document.getElementById('girishStatus').value = r.girishStatus;
             document.getElementById('totalAmount').value = r.totalAmount;
             document.getElementById('paidAmount').value = r.paidAmount;
 
-            document.getElementById('formTitle').innerHTML = `<i class="fas fa-edit text-amber-600 mr-2"></i>Edit Client Record (${r.id})`;
-            document.getElementById('submitBtnText').innerText = 'Update Record';
+            const formCard = document.getElementById('formCard');
+            formCard.classList.add('border-amber-500', 'bg-amber-50/30');
+            document.getElementById('formTitle').innerHTML = `<i class="fas fa-edit text-amber-600 mr-2"></i>Editing Client: <span class="text-red-600">${r.customerName}</span> (${r.id})`;
+            document.getElementById('submitBtn').classList.replace('bg-red-600', 'bg-amber-600');
+            document.getElementById('submitBtn').classList.replace('hover:bg-red-700', 'hover:bg-amber-700');
+            document.getElementById('submitBtnText').innerText = 'Update Client Data';
             document.getElementById('cancelEditBtn').classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -463,16 +506,20 @@
         function resetForm() {
             document.getElementById('clientForm').reset();
             document.getElementById('editId').value = '';
+            const formCard = document.getElementById('formCard');
+            formCard.classList.remove('border-amber-500', 'bg-amber-50/30');
             document.getElementById('formTitle').innerHTML = `<i class="fas fa-user-plus text-red-600 mr-2"></i>Add New Client Record`;
-            document.getElementById('submitBtnText').innerText = 'Save Client Record';
+            document.getElementById('submitBtn').classList.replace('bg-amber-600', 'bg-red-600');
+            document.getElementById('submitBtn').classList.replace('hover:bg-amber-700', 'hover:bg-red-700');
+            document.getElementById('submitBtnText').innerText = 'Save Record';
             document.getElementById('cancelEditBtn').classList.add('hidden');
         }
 
-        // Badge Helper
-        function getBadge(status) {
-            if (status === 'Complete') return `<span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-emerald-100 text-emerald-800">Complete</span>`;
-            if (status === 'Rejected') return `<span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-red-100 text-red-800">Rejected</span>`;
-            return `<span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-amber-100 text-amber-800">Pending</span>`;
+        // Color Class Helper for Quick Dropdowns
+        function getStatusColor(status) {
+            if (status === 'Complete') return 'bg-emerald-100 text-emerald-800 border-emerald-300';
+            if (status === 'Rejected') return 'bg-red-100 text-red-800 border-red-300';
+            return 'bg-amber-100 text-amber-800 border-amber-300';
         }
 
         // Update All UI Sections
@@ -506,7 +553,7 @@
             filterSelect.value = currentFilter;
         }
 
-        // Render Main Client Table
+        // Render Main Client Table with Quick Inline Editing
         function renderTable() {
             const search = document.getElementById('searchInput').value.toLowerCase();
             const agentFilter = document.getElementById('filterAgent').value;
@@ -514,10 +561,12 @@
             const visaStatusFilter = document.getElementById('filterVisaStatus').value;
 
             const filtered = records.filter(r => {
+                const refNumStr = (r.refNumber || '').toLowerCase();
                 const matchSearch = r.customerName.toLowerCase().includes(search) ||
                                     r.agentName.toLowerCase().includes(search) ||
                                     r.passportNo.toLowerCase().includes(search) ||
                                     r.cnic.toLowerCase().includes(search) ||
+                                    refNumStr.includes(search) ||
                                     r.contactNo.includes(search);
                 const matchAgent = !agentFilter || r.agentName === agentFilter;
                 const matchType = !visaTypeFilter || r.visaType === visaTypeFilter;
@@ -527,49 +576,71 @@
 
             const tbody = document.getElementById('clientTableBody');
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="10" class="text-center py-8 text-gray-400">No client records found.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="9" class="text-center py-8 text-gray-400">No client records found.</td></tr>`;
                 return;
             }
 
             tbody.innerHTML = filtered.map(r => `
                 <tr class="hover:bg-gray-50 transition">
-                    <td class="px-4 py-3 whitespace-nowrap">
+                    <td class="px-3 py-3 whitespace-nowrap">
                         <div class="font-bold text-gray-800">${r.id}</div>
-                        <div class="text-xs text-gray-400">${r.date}</div>
+                        <div class="text-[11px] text-gray-400">${r.date}</div>
+                        <div class="font-bold text-blue-700 mt-0.5"><i class="fas fa-user-tie mr-1"></i>${r.agentName}</div>
                     </td>
-                    <td class="px-4 py-3 font-semibold text-blue-700">${r.agentName}</td>
-                    <td class="px-4 py-3">
-                        <div class="font-bold text-gray-900">${r.customerName}</div>
-                        <div class="text-xs text-gray-500">S/O: ${r.fatherName}</div>
+                    <td class="px-3 py-3">
+                        <div class="font-bold text-gray-900 text-sm">${r.customerName}</div>
+                        <div class="text-[11px] text-gray-500">S/O: ${r.fatherName}</div>
                     </td>
-                    <td class="px-4 py-3 text-xs">
+                    <td class="px-3 py-3 text-[11px] space-y-0.5">
                         <div><span class="font-semibold">CNIC:</span> ${r.cnic}</div>
-                        <div><span class="font-semibold">Pass:</span> <span class="uppercase font-mono">${r.passportNo}</span></div>
+                        <div><span class="font-semibold">Pass:</span> <span class="uppercase font-mono font-bold text-gray-800">${r.passportNo}</span></div>
+                        <div><span class="font-semibold">Cell:</span> ${r.contactNo}</div>
                     </td>
-                    <td class="px-4 py-3 text-xs font-medium">${r.contactNo}</td>
-                    <td class="px-4 py-3">
-                        <span class="px-2 py-0.5 text-xs font-semibold rounded bg-indigo-50 text-indigo-700">${r.visaType}</span>
-                        <div class="text-xs text-gray-500 mt-1">${r.country}</div>
+                    <td class="px-3 py-3">
+                        <span class="px-2 py-0.5 text-[11px] font-semibold rounded bg-indigo-50 text-indigo-700">${r.visaType}</span>
+                        <div class="text-[11px] text-gray-600 font-medium mt-1">${r.country}</div>
                     </td>
-                    <td class="px-4 py-3 text-center">
-                        ${getBadge(r.paymentStatus)}
-                        ${r.totalAmount > 0 ? `<div class="text-[11px] text-gray-500 mt-1">Bal: ${(r.totalAmount - r.paidAmount).toLocaleString()}</div>` : ''}
+                    <td class="px-3 py-3 text-center">
+                        <select onchange="quickUpdateField('${r.id}', 'paymentStatus', this.value)" class="text-[11px] font-bold px-2 py-1 rounded-full border cursor-pointer focus:outline-none ${getStatusColor(r.paymentStatus)}">
+                            <option value="Pending" ${r.paymentStatus === 'Pending' ? 'selected' : ''}>Pending</option>
+                            <option value="Complete" ${r.paymentStatus === 'Complete' ? 'selected' : ''}>Complete</option>
+                        </select>
+                        ${r.totalAmount > 0 ? `<div class="text-[10px] text-gray-500 mt-1">Bal: ${(r.totalAmount - r.paidAmount).toLocaleString()}</div>` : ''}
                     </td>
-                    <td class="px-4 py-3 text-center">${getBadge(r.visaStatus)}</td>
-                    <td class="px-4 py-3 text-center text-xs space-y-1">
-                        <div>Ref: ${getBadge(r.refStatus)}</div>
-                        <div>Girish: ${getBadge(r.girishStatus)}</div>
+                    <td class="px-3 py-3 text-center">
+                        <select onchange="quickUpdateField('${r.id}', 'visaStatus', this.value)" class="text-[11px] font-bold px-2 py-1 rounded-full border cursor-pointer focus:outline-none ${getStatusColor(r.visaStatus)}">
+                            <option value="Pending" ${r.visaStatus === 'Pending' ? 'selected' : ''}>Pending</option>
+                            <option value="Complete" ${r.visaStatus === 'Complete' ? 'selected' : ''}>Complete</option>
+                            <option value="Rejected" ${r.visaStatus === 'Rejected' ? 'selected' : ''}>Rejected</option>
+                        </select>
                     </td>
-                    <td class="px-4 py-3 text-center whitespace-nowrap">
-                        <button onclick="openClientSlip('${r.id}')" class="bg-gray-800 hover:bg-black text-white px-2.5 py-1 rounded text-xs mr-1" title="Client Slip with QR">
-                            <i class="fas fa-qrcode"></i> Slip
-                        </button>
-                        <button onclick="editRecord('${r.id}')" class="text-blue-600 hover:text-blue-800 p-1" title="Edit">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button onclick="deleteRecord('${r.id}')" class="text-red-600 hover:text-red-800 p-1" title="Delete">
-                            <i class="fas fa-trash"></i>
-                        </button>
+                    <td class="px-3 py-3 text-center">
+                        <select onchange="quickUpdateField('${r.id}', 'refStatus', this.value)" class="text-[11px] font-bold px-2 py-1 rounded-full border cursor-pointer focus:outline-none ${getStatusColor(r.refStatus)}">
+                            <option value="Pending" ${r.refStatus === 'Pending' ? 'selected' : ''}>Pending</option>
+                            <option value="Complete" ${r.refStatus === 'Complete' ? 'selected' : ''}>Complete</option>
+                        </select>
+                        ${r.refNumber ? `<div class="font-mono font-bold text-gray-900 mt-1 bg-yellow-50 px-1.5 py-0.5 rounded border border-yellow-300">${r.refNumber}</div>` : `<div class="text-[10px] text-gray-400 mt-0.5">No Ref #</div>`}
+                    </td>
+                    <td class="px-3 py-3 text-center">
+                        <select onchange="quickUpdateField('${r.id}', 'girishStatus', this.value)" class="text-[11px] font-bold px-2 py-1 rounded-full border cursor-pointer focus:outline-none ${getStatusColor(r.girishStatus)}">
+                            <option value="Pending" ${r.girishStatus === 'Pending' ? 'selected' : ''}>Pending</option>
+                            <option value="Complete" ${r.girishStatus === 'Complete' ? 'selected' : ''}>Complete</option>
+                        </select>
+                    </td>
+                    <td class="px-3 py-3 text-center whitespace-nowrap">
+                        <div class="flex flex-col gap-1 items-center">
+                            <button onclick="openClientSlip('${r.id}')" class="w-full bg-gray-800 hover:bg-black text-white px-2.5 py-1 rounded text-[11px] font-semibold flex items-center justify-center gap-1" title="Client Slip with QR">
+                                <i class="fas fa-qrcode"></i> QR Slip
+                            </button>
+                            <div class="flex gap-1 w-full">
+                                <button onclick="editRecord('${r.id}')" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-[11px] font-semibold" title="Edit Full Record">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button onclick="deleteRecord('${r.id}')" class="bg-red-100 hover:bg-red-600 text-red-600 hover:text-white px-2 py-1 rounded text-[11px]" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             `).join('');
@@ -634,6 +705,7 @@
             document.getElementById('slipId').innerText = r.id;
 
             const balance = r.totalAmount - r.paidAmount;
+            const displayRef = r.refNumber ? `${r.refStatus} (${r.refNumber})` : r.refStatus;
 
             document.getElementById('slipDynamicContent').innerHTML = `
                 <div class="grid grid-cols-2 gap-4 text-sm bg-gray-50 p-4 rounded-xl border border-gray-200">
@@ -659,6 +731,7 @@
                     <div class="p-3 border rounded-lg">
                         <span class="text-xs text-gray-500 block">Reference No</span>
                         <strong class="text-sm ${r.refStatus === 'Complete' ? 'text-emerald-600' : 'text-amber-600'}">${r.refStatus}</strong>
+                        ${r.refNumber ? `<span class="block text-xs font-mono font-bold text-gray-900 mt-0.5">${r.refNumber}</span>` : ''}
                     </div>
                     <div class="p-3 border rounded-lg">
                         <span class="text-xs text-gray-500 block">Girish Status</span>
@@ -674,8 +747,8 @@
                 </div>` : ''}
             `;
 
-            // Generate QR Data with all details
-            const qrText = `POLARIS CONSULTANTS\nID: ${r.id}\nAgent: ${r.agentName}\nClient: ${r.customerName} S/O ${r.fatherName}\nCNIC: ${r.cnic}\nPassport: ${r.passportNo}\nContact: ${r.contactNo}\nVisa: ${r.visaType} (${r.visaStatus})\nPayment: ${r.paymentStatus}\nRef: ${r.refStatus} | Girish: ${r.girishStatus}`;
+            // Generate QR Data with all details including Reference Number
+            const qrText = `POLARIS CONSULTANTS\nID: ${r.id}\nAgent: ${r.agentName}\nClient: ${r.customerName} S/O ${r.fatherName}\nCNIC: ${r.cnic}\nPassport: ${r.passportNo}\nContact: ${r.contactNo}\nVisa: ${r.visaType} (${r.visaStatus})\nPayment: ${r.paymentStatus}\nRef: ${displayRef}\nGirish: ${r.girishStatus}`;
 
             generateQR(qrText);
             document.getElementById('slipModal').classList.remove('hidden');
@@ -701,7 +774,11 @@
                     <td class="py-1.5 px-2">${c.visaType}</td>
                     <td class="py-1.5 px-2 text-center">${c.paymentStatus}</td>
                     <td class="py-1.5 px-2 text-center">${c.visaStatus}</td>
-                    <td class="py-1.5 px-2 text-center">${c.refStatus} / ${c.girishStatus}</td>
+                    <td class="py-1.5 px-2 text-center">
+                        ${c.refStatus}
+                        ${c.refNumber ? `<br><span class="font-mono font-bold text-[10px] text-gray-900">(${c.refNumber})</span>` : ''}
+                    </td>
+                    <td class="py-1.5 px-2 text-center">${c.girishStatus}</td>
                 </tr>
             `).join('');
 
@@ -724,14 +801,15 @@
                             <th class="py-1.5 px-2">Visa</th>
                             <th class="py-1.5 px-2 text-center">Payment</th>
                             <th class="py-1.5 px-2 text-center">Visa St.</th>
-                            <th class="py-1.5 px-2 text-center">Ref / Girish</th>
+                            <th class="py-1.5 px-2 text-center">Ref No</th>
+                            <th class="py-1.5 px-2 text-center">Girish</th>
                         </tr>
                     </thead>
                     <tbody>${rowsHtml}</tbody>
                 </table>
             `;
 
-            const summaryClients = agentClients.map(c => `${c.customerName}(${c.passportNo}:${c.visaStatus}/${c.paymentStatus})`).join('; ');
+            const summaryClients = agentClients.map(c => `${c.customerName}(${c.passportNo}|Ref:${c.refNumber || c.refStatus}|Visa:${c.visaStatus}|Pay:${c.paymentStatus})`).join('; ');
             const qrText = `POLARIS AGENT SLIP\nAgent: ${agentName}\nTotal Clients: ${agentClients.length}\nComplete Visas: ${completeVisas}\nPending Pay: ${pendingPayments}\nDetails: ${summaryClients}`.slice(0, 800);
 
             generateQR(qrText);
@@ -788,7 +866,8 @@
                 'Visa Category': r.visaType,
                 'Payment Status': r.paymentStatus,
                 'Visa Status': r.visaStatus,
-                'Reference No': r.refStatus,
+                'Reference Status': r.refStatus,
+                'Reference Number': r.refNumber || 'N/A',
                 'Girish': r.girishStatus,
                 'Total Amount': r.totalAmount,
                 'Paid Amount': r.paidAmount,
@@ -821,7 +900,7 @@
 
         // Print Full Report
         function printFullReport() {
-            const win = window.open('', '', 'width=1000,height=700');
+            const win = window.open('', '', 'width=1050,height=700');
             let rows = records.map((r, i) => `
                 <tr>
                     <td>${i + 1}</td>
@@ -834,7 +913,7 @@
                     <td>${r.visaType}</td>
                     <td>${r.paymentStatus}</td>
                     <td>${r.visaStatus}</td>
-                    <td>${r.refStatus}</td>
+                    <td>${r.refStatus} ${r.refNumber ? '(' + r.refNumber + ')' : ''}</td>
                     <td>${r.girishStatus}</td>
                 </tr>
             `).join('');
@@ -860,7 +939,7 @@
                             <tr>
                                 <th>#</th><th>Agent</th><th>Customer</th><th>Father Name</th><th>CNIC</th>
                                 <th>Passport</th><th>Contact</th><th>Visa</th><th>Payment</th>
-                                <th>Visa Status</th><th>Ref No</th><th>Girish</th>
+                                <th>Visa Status</th><th>Reference</th><th>Girish</th>
                             </tr>
                         </thead>
                         <tbody>${rows}</tbody>
@@ -872,7 +951,7 @@
             win.print();
         }
 
-        // JSON Backup & Restore (Extra Safety for LocalStorage)
+        // JSON Backup & Restore
         function downloadBackup() {
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(records, null, 2));
             const a = document.createElement('a');

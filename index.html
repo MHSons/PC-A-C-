@@ -70,54 +70,64 @@
     <div class="max-w-[98%] mx-auto px-3 py-6">
         
         <!-- Dashboard Summary Cards -->
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
+        <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-6">
             <div class="bg-white rounded-xl shadow p-4 border-l-4 border-blue-600">
                 <div class="flex justify-between items-center">
                     <div>
-                        <p class="text-xs font-semibold text-gray-500 uppercase">Total Agents</p>
+                        <p class="text-[11px] font-semibold text-gray-500 uppercase">Total Agents</p>
                         <h3 class="text-2xl font-bold text-gray-900 mt-1" id="statTotalAgents">0</h3>
                     </div>
-                    <div class="p-3 bg-blue-50 rounded-full text-blue-600"><i class="fas fa-user-tie text-xl"></i></div>
+                    <div class="p-2.5 bg-blue-50 rounded-full text-blue-600"><i class="fas fa-user-tie text-lg"></i></div>
                 </div>
             </div>
 
             <div class="bg-white rounded-xl shadow p-4 border-l-4 border-indigo-600">
                 <div class="flex justify-between items-center">
                     <div>
-                        <p class="text-xs font-semibold text-gray-500 uppercase">Total Clients</p>
+                        <p class="text-[11px] font-semibold text-gray-500 uppercase">Total Clients</p>
                         <h3 class="text-2xl font-bold text-gray-900 mt-1" id="statTotalClients">0</h3>
                     </div>
-                    <div class="p-3 bg-indigo-50 rounded-full text-indigo-600"><i class="fas fa-users text-xl"></i></div>
+                    <div class="p-2.5 bg-indigo-50 rounded-full text-indigo-600"><i class="fas fa-users text-lg"></i></div>
                 </div>
             </div>
 
             <div class="bg-white rounded-xl shadow p-4 border-l-4 border-emerald-600">
                 <div class="flex justify-between items-center">
                     <div>
-                        <p class="text-xs font-semibold text-gray-500 uppercase">Visas Complete</p>
+                        <p class="text-[11px] font-semibold text-gray-500 uppercase">Visas Complete</p>
                         <h3 class="text-2xl font-bold text-emerald-600 mt-1" id="statVisaComplete">0</h3>
                     </div>
-                    <div class="p-3 bg-emerald-50 rounded-full text-emerald-600"><i class="fas fa-passport text-xl"></i></div>
+                    <div class="p-2.5 bg-emerald-50 rounded-full text-emerald-600"><i class="fas fa-passport text-lg"></i></div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow p-4 border-l-4 border-purple-600">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-[11px] font-semibold text-gray-500 uppercase">Tickets Done</p>
+                        <h3 class="text-2xl font-bold text-purple-600 mt-1" id="statTicketsComplete">0</h3>
+                    </div>
+                    <div class="p-2.5 bg-purple-50 rounded-full text-purple-600"><i class="fas fa-plane-departure text-lg"></i></div>
                 </div>
             </div>
 
             <div class="bg-white rounded-xl shadow p-4 border-l-4 border-amber-500">
                 <div class="flex justify-between items-center">
                     <div>
-                        <p class="text-xs font-semibold text-gray-500 uppercase">Pending Payments</p>
+                        <p class="text-[11px] font-semibold text-gray-500 uppercase">Pending Pay</p>
                         <h3 class="text-2xl font-bold text-amber-600 mt-1" id="statPaymentPending">0</h3>
                     </div>
-                    <div class="p-3 bg-amber-50 rounded-full text-amber-600"><i class="fas fa-clock text-xl"></i></div>
+                    <div class="p-2.5 bg-amber-50 rounded-full text-amber-600"><i class="fas fa-clock text-lg"></i></div>
                 </div>
             </div>
 
             <div class="bg-white rounded-xl shadow p-4 border-l-4 border-red-600">
                 <div class="flex justify-between items-center">
                     <div>
-                        <p class="text-xs font-semibold text-gray-500 uppercase">Rejected Cases</p>
+                        <p class="text-[11px] font-semibold text-gray-500 uppercase">Rejected</p>
                         <h3 class="text-2xl font-bold text-red-600 mt-1" id="statVisaRejected">0</h3>
                     </div>
-                    <div class="p-3 bg-red-50 rounded-full text-red-600"><i class="fas fa-times-circle text-xl"></i></div>
+                    <div class="p-2.5 bg-red-50 rounded-full text-red-600"><i class="fas fa-times-circle text-lg"></i></div>
                 </div>
             </div>
         </div>
@@ -192,19 +202,15 @@
                     </div>
 
                     <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Entry / Start Date *</label>
+                        <input type="date" id="entryDate" required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                    </div>
+
+                    <div>
                         <label class="block text-xs font-semibold text-gray-700 mb-1">Payment Status *</label>
                         <select id="paymentStatus" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
                             <option value="Pending">Pending</option>
                             <option value="Complete">Complete</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-700 mb-1">Visa Status *</label>
-                        <select id="visaStatus" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
-                            <option value="Pending">Pending</option>
-                            <option value="Complete">Complete</option>
-                            <option value="Rejected">Rejected</option>
                         </select>
                     </div>
 
@@ -239,8 +245,38 @@
                         <input type="number" id="paidAmount" placeholder="0" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
                     </div>
 
-                    <div class="flex items-end">
-                        <button type="submit" id="submitBtn" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 px-4 rounded-lg shadow transition flex justify-center items-center gap-2">
+                    <div>
+                        <label class="block text-xs font-semibold text-emerald-700 mb-1">Visa Status *</label>
+                        <select id="visaStatus" onchange="toggleTicketSection()" class="w-full border-2 border-emerald-300 rounded-lg px-3 py-2 text-sm bg-white font-semibold focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                            <option value="Pending">Pending</option>
+                            <option value="Complete">Complete (Approved)</option>
+                            <option value="Rejected">Rejected</option>
+                        </select>
+                    </div>
+
+                    <!-- CONDITIONAL TICKET SECTION (Visible when Visa Status = Complete) -->
+                    <div id="ticketFormSection" class="hidden md:col-span-3 lg:col-span-4 bg-purple-50 border-2 border-purple-200 rounded-xl p-4 grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+                        <div>
+                            <label class="block text-xs font-bold text-purple-800 mb-1"><i class="fas fa-plane mr-1"></i> Ticket Status (Visa Approved)</label>
+                            <select id="ticketStatus" onchange="toggleTicketDateInput()" class="w-full border border-purple-300 rounded-lg px-3 py-2 text-sm bg-white font-semibold focus:ring-2 focus:ring-purple-500 focus:outline-none">
+                                <option value="Pending">Pending</option>
+                                <option value="Complete">Complete (Ticket Issued)</option>
+                            </select>
+                        </div>
+
+                        <div id="ticketDateWrapper" class="hidden">
+                            <label class="block text-xs font-bold text-purple-800 mb-1"><i class="fas fa-calendar-check mr-1"></i> Ticket Issue / Travel Date *</label>
+                            <input type="date" id="ticketDate" onchange="updateFormDurationPreview()" class="w-full border border-purple-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-purple-500 focus:outline-none">
+                        </div>
+
+                        <div id="durationPreviewBox" class="hidden bg-white p-3 rounded-lg border border-purple-200 text-center">
+                            <span class="text-[11px] text-gray-500 block uppercase font-semibold">Total Time (Entry to Ticket)</span>
+                            <strong id="durationPreviewText" class="text-sm text-purple-700 font-extrabold">0 Days</strong>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-3 lg:col-span-4 flex justify-end mt-2">
+                        <button type="submit" id="submitBtn" class="w-full md:w-64 bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 px-6 rounded-lg shadow transition flex justify-center items-center gap-2">
                             <i class="fas fa-save"></i> <span id="submitBtnText">Save Record</span>
                         </button>
                     </div>
@@ -271,7 +307,7 @@
                     </select>
                 </div>
                 <div class="text-xs text-gray-500 font-medium">
-                    <i class="fas fa-info-circle text-blue-500"></i> Tip: Status ko table se seedha change karein ya <b>Edit</b> dabayein
+                    <i class="fas fa-info-circle text-blue-500"></i> Visa <b>Complete</b> karne par <b>Ticket & Days</b> option khul jayega
                 </div>
             </div>
 
@@ -281,14 +317,15 @@
                     <table class="min-w-full divide-y divide-gray-200 text-xs">
                         <thead class="bg-gray-900 text-white uppercase">
                             <tr>
-                                <th class="px-3 py-3 text-left">ID / Agent</th>
+                                <th class="px-3 py-3 text-left">ID / Entry Date / Agent</th>
                                 <th class="px-3 py-3 text-left">Customer & Father</th>
                                 <th class="px-3 py-3 text-left">CNIC / Passport / Cell</th>
                                 <th class="px-3 py-3 text-left">Visa Info</th>
                                 <th class="px-3 py-3 text-center">Payment</th>
-                                <th class="px-3 py-3 text-center">Visa Status</th>
                                 <th class="px-3 py-3 text-center">Reference & No</th>
                                 <th class="px-3 py-3 text-center">Girish</th>
+                                <th class="px-3 py-3 text-center">Visa Status</th>
+                                <th class="px-3 py-3 text-center">Ticket & Total Time</th>
                                 <th class="px-3 py-3 text-center">Actions & Slip</th>
                             </tr>
                         </thead>
@@ -314,10 +351,10 @@
                                 <th class="px-4 py-3 text-center">Total Clients</th>
                                 <th class="px-4 py-3 text-center">Study / Work / Azaad</th>
                                 <th class="px-4 py-3 text-center">Visa Complete</th>
+                                <th class="px-4 py-3 text-center">Tickets Done</th>
                                 <th class="px-4 py-3 text-center">Visa Pending</th>
                                 <th class="px-4 py-3 text-center">Rejected</th>
-                                <th class="px-4 py-3 text-center">Payment Complete</th>
-                                <th class="px-4 py-3 text-center">Payment Pending</th>
+                                <th class="px-4 py-3 text-center">Pay Complete / Pend</th>
                                 <th class="px-4 py-3 text-center">Agent Slip</th>
                             </tr>
                         </thead>
@@ -360,7 +397,7 @@
                     </div>
                     <div class="text-right">
                         <span id="slipTypeBadge" class="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded uppercase">CLIENT RECEIPT</span>
-                        <p class="text-xs text-gray-500 mt-2">Date: <span id="slipDate" class="font-semibold text-gray-800"></span></p>
+                        <p class="text-xs text-gray-500 mt-2">Print Date: <span id="slipDate" class="font-semibold text-gray-800"></span></p>
                         <p class="text-xs text-gray-500">Slip ID: <span id="slipId" class="font-semibold text-gray-800"></span></p>
                     </div>
                 </div>
@@ -372,7 +409,7 @@
                 <div class="mt-8 pt-4 border-t border-dashed border-gray-400 flex justify-between items-center">
                     <div class="text-xs text-gray-600 space-y-1 max-w-sm">
                         <p class="font-bold text-gray-800">Scan QR Code to Verify Record Details</p>
-                        <p>This is a computer-generated receipt from Polaris Consultants Portal. All statuses (Payment, Visa, Reference Number & Girish) are encoded in the QR code.</p>
+                        <p>This is a computer-generated receipt from Polaris Consultants Portal. All statuses (Payment, Visa, Reference, Girish, Ticket & Processing Time) are encoded in the QR code.</p>
                         <div class="pt-6">
                             <span class="border-t border-gray-800 px-4 pt-1 text-gray-800 font-semibold">Authorized Signature & Stamp</span>
                         </div>
@@ -409,19 +446,100 @@
         const STORAGE_KEY = 'polaris_consultants_data_v1';
         let records = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 
+        // Helper: Convert DD/MM/YYYY or YYYY-MM-DD to YYYY-MM-DD
+        function toISO(dateStr) {
+            if (!dateStr) return new Date().toISOString().slice(0, 10);
+            if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
+            if (/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) {
+                const [d, m, y] = dateStr.split('/');
+                return `${y}-${m}-${d}`;
+            }
+            return new Date().toISOString().slice(0, 10);
+        }
+
+        // Helper: Format YYYY-MM-DD to DD/MM/YYYY for Display
+        function formatDisplayDate(dateStr) {
+            const iso = toISO(dateStr);
+            const [y, m, d] = iso.split('-');
+            return `${d}/${m}/${y}`;
+        }
+
+        // Helper: Calculate Days & Months between two dates
+        function calculateDuration(startDateStr, endDateStr) {
+            const start = new Date(toISO(startDateStr));
+            const end = endDateStr ? new Date(toISO(endDateStr)) : new Date();
+            start.setHours(0, 0, 0, 0);
+            end.setHours(0, 0, 0, 0);
+
+            const diffTime = end - start;
+            const totalDays = Math.max(0, Math.round(diffTime / (1000 * 60 * 60 * 24)));
+
+            if (totalDays >= 30) {
+                const months = Math.floor(totalDays / 30);
+                const remDays = totalDays % 30;
+                return `${totalDays} Days (${months}M ${remDays}D)`;
+            }
+            return `${totalDays} Day${totalDays === 1 ? '' : 's'}`;
+        }
+
         // Initialize App
         document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('entryDate').value = new Date().toISOString().slice(0, 10);
             updateUI();
         });
+
+        // Form Conditional Visibility: Show Ticket Section only when Visa Status === 'Complete'
+        function toggleTicketSection() {
+            const visaStatus = document.getElementById('visaStatus').value;
+            const ticketSec = document.getElementById('ticketFormSection');
+            if (visaStatus === 'Complete') {
+                ticketSec.classList.remove('hidden');
+                toggleTicketDateInput();
+            } else {
+                ticketSec.classList.add('hidden');
+            }
+        }
+
+        // Form Conditional Visibility: Show Ticket Date when Ticket Status === 'Complete'
+        function toggleTicketDateInput() {
+            const ticketStatus = document.getElementById('ticketStatus').value;
+            const dateWrapper = document.getElementById('ticketDateWrapper');
+            const previewBox = document.getElementById('durationPreviewBox');
+            const ticketDateInput = document.getElementById('ticketDate');
+
+            if (ticketStatus === 'Complete') {
+                dateWrapper.classList.remove('hidden');
+                previewBox.classList.remove('hidden');
+                if (!ticketDateInput.value) {
+                    ticketDateInput.value = new Date().toISOString().slice(0, 10);
+                }
+                updateFormDurationPreview();
+            } else {
+                dateWrapper.classList.add('hidden');
+                previewBox.classList.add('hidden');
+                ticketDateInput.value = '';
+            }
+        }
+
+        function updateFormDurationPreview() {
+            const entryDate = document.getElementById('entryDate').value;
+            const ticketDate = document.getElementById('ticketDate').value;
+            if (entryDate && ticketDate) {
+                document.getElementById('durationPreviewText').innerText = calculateDuration(entryDate, ticketDate);
+            }
+        }
 
         // Save or Update Client
         function saveClient(e) {
             e.preventDefault();
             const editId = document.getElementById('editId').value;
+            const visaStatus = document.getElementById('visaStatus').value;
+            const ticketStatus = visaStatus === 'Complete' ? document.getElementById('ticketStatus').value : 'Pending';
+            const ticketDate = (visaStatus === 'Complete' && ticketStatus === 'Complete') ? document.getElementById('ticketDate').value : '';
 
             const record = {
                 id: editId ? editId : 'PC-' + Date.now().toString().slice(-6),
-                date: editId ? records.find(r => r.id === editId).date : new Date().toLocaleDateString('en-GB'),
+                date: toISO(document.getElementById('entryDate').value),
                 agentName: document.getElementById('agentName').value.trim(),
                 customerName: document.getElementById('customerName').value.trim(),
                 fatherName: document.getElementById('fatherName').value.trim(),
@@ -431,10 +549,12 @@
                 country: document.getElementById('country').value.trim() || 'N/A',
                 visaType: document.getElementById('visaType').value,
                 paymentStatus: document.getElementById('paymentStatus').value,
-                visaStatus: document.getElementById('visaStatus').value,
+                visaStatus: visaStatus,
                 refStatus: document.getElementById('refStatus').value,
                 refNumber: document.getElementById('refNumber').value.trim().toUpperCase(),
                 girishStatus: document.getElementById('girishStatus').value,
+                ticketStatus: ticketStatus,
+                ticketDate: ticketDate,
                 totalAmount: Number(document.getElementById('totalAmount').value) || 0,
                 paidAmount: Number(document.getElementById('paidAmount').value) || 0
             };
@@ -456,6 +576,21 @@
             const index = records.findIndex(r => r.id === id);
             if (index !== -1) {
                 records[index][field] = value;
+
+                // Auto-handle Ticket fields if Visa Status changes
+                if (field === 'visaStatus' && value !== 'Complete') {
+                    records[index].ticketStatus = 'Pending';
+                    records[index].ticketDate = '';
+                }
+                // Auto-set today's date if Ticket Status switched to Complete
+                if (field === 'ticketStatus') {
+                    if (value === 'Complete' && !records[index].ticketDate) {
+                        records[index].ticketDate = new Date().toISOString().slice(0, 10);
+                    } else if (value === 'Pending') {
+                        records[index].ticketDate = '';
+                    }
+                }
+
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
                 updateUI();
             }
@@ -467,6 +602,7 @@
             if (!r) return;
 
             document.getElementById('editId').value = r.id;
+            document.getElementById('entryDate').value = toISO(r.date);
             document.getElementById('agentName').value = r.agentName;
             document.getElementById('customerName').value = r.customerName;
             document.getElementById('fatherName').value = r.fatherName;
@@ -482,6 +618,10 @@
             document.getElementById('girishStatus').value = r.girishStatus;
             document.getElementById('totalAmount').value = r.totalAmount;
             document.getElementById('paidAmount').value = r.paidAmount;
+
+            document.getElementById('ticketStatus').value = r.ticketStatus || 'Pending';
+            document.getElementById('ticketDate').value = r.ticketDate ? toISO(r.ticketDate) : '';
+            toggleTicketSection();
 
             const formCard = document.getElementById('formCard');
             formCard.classList.add('border-amber-500', 'bg-amber-50/30');
@@ -506,6 +646,8 @@
         function resetForm() {
             document.getElementById('clientForm').reset();
             document.getElementById('editId').value = '';
+            document.getElementById('entryDate').value = new Date().toISOString().slice(0, 10);
+            document.getElementById('ticketFormSection').classList.add('hidden');
             const formCard = document.getElementById('formCard');
             formCard.classList.remove('border-amber-500', 'bg-amber-50/30');
             document.getElementById('formTitle').innerHTML = `<i class="fas fa-user-plus text-red-600 mr-2"></i>Add New Client Record`;
@@ -536,6 +678,7 @@
             document.getElementById('statTotalAgents').innerText = uniqueAgents.length;
             document.getElementById('statTotalClients').innerText = records.length;
             document.getElementById('statVisaComplete').innerText = records.filter(r => r.visaStatus === 'Complete').length;
+            document.getElementById('statTicketsComplete').innerText = records.filter(r => r.visaStatus === 'Complete' && r.ticketStatus === 'Complete').length;
             document.getElementById('statPaymentPending').innerText = records.filter(r => r.paymentStatus === 'Pending').length;
             document.getElementById('statVisaRejected').innerText = records.filter(r => r.visaStatus === 'Rejected').length;
         }
@@ -576,15 +719,47 @@
 
             const tbody = document.getElementById('clientTableBody');
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="9" class="text-center py-8 text-gray-400">No client records found.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="10" class="text-center py-8 text-gray-400">No client records found.</td></tr>`;
                 return;
             }
 
-            tbody.innerHTML = filtered.map(r => `
+            tbody.innerHTML = filtered.map(r => {
+                const tStatus = r.ticketStatus || 'Pending';
+                const tDateISO = r.ticketDate ? toISO(r.ticketDate) : '';
+                let ticketCellHtml = `<span class="text-[11px] text-gray-400 italic">Waiting Visa</span>`;
+
+                if (r.visaStatus === 'Complete') {
+                    if (tStatus === 'Complete' && tDateISO) {
+                        const durationStr = calculateDuration(r.date, tDateISO);
+                        ticketCellHtml = `
+                            <select onchange="quickUpdateField('${r.id}', 'ticketStatus', this.value)" class="text-[11px] font-bold px-2 py-0.5 rounded-full border cursor-pointer bg-purple-100 text-purple-800 border-purple-300">
+                                <option value="Pending">Pending</option>
+                                <option value="Complete" selected>Complete</option>
+                            </select>
+                            <input type="date" value="${tDateISO}" onchange="quickUpdateField('${r.id}', 'ticketDate', this.value)" class="block mx-auto mt-1 text-[10px] border border-purple-200 rounded px-1 py-0.5 text-gray-700">
+                            <div class="mt-1 bg-purple-700 text-white text-[10px] font-bold px-1.5 py-0.5 rounded shadow-sm">
+                                <i class="fas fa-stopwatch mr-0.5"></i> ${durationStr}
+                            </div>
+                        `;
+                    } else {
+                        const runningDays = calculateDuration(r.date, null);
+                        ticketCellHtml = `
+                            <select onchange="quickUpdateField('${r.id}', 'ticketStatus', this.value)" class="text-[11px] font-bold px-2 py-0.5 rounded-full border cursor-pointer bg-amber-100 text-amber-800 border-amber-300">
+                                <option value="Pending" selected>Pending</option>
+                                <option value="Complete">Complete</option>
+                            </select>
+                            <div class="text-[10px] text-gray-500 mt-1">${runningDays} running</div>
+                        `;
+                    }
+                } else if (r.visaStatus === 'Rejected') {
+                    ticketCellHtml = `<span class="text-[11px] text-red-400">N/A</span>`;
+                }
+
+                return `
                 <tr class="hover:bg-gray-50 transition">
                     <td class="px-3 py-3 whitespace-nowrap">
                         <div class="font-bold text-gray-800">${r.id}</div>
-                        <div class="text-[11px] text-gray-400">${r.date}</div>
+                        <div class="text-[11px] text-gray-500"><i class="far fa-calendar-alt mr-1"></i>${formatDisplayDate(r.date)}</div>
                         <div class="font-bold text-blue-700 mt-0.5"><i class="fas fa-user-tie mr-1"></i>${r.agentName}</div>
                     </td>
                     <td class="px-3 py-3">
@@ -608,13 +783,6 @@
                         ${r.totalAmount > 0 ? `<div class="text-[10px] text-gray-500 mt-1">Bal: ${(r.totalAmount - r.paidAmount).toLocaleString()}</div>` : ''}
                     </td>
                     <td class="px-3 py-3 text-center">
-                        <select onchange="quickUpdateField('${r.id}', 'visaStatus', this.value)" class="text-[11px] font-bold px-2 py-1 rounded-full border cursor-pointer focus:outline-none ${getStatusColor(r.visaStatus)}">
-                            <option value="Pending" ${r.visaStatus === 'Pending' ? 'selected' : ''}>Pending</option>
-                            <option value="Complete" ${r.visaStatus === 'Complete' ? 'selected' : ''}>Complete</option>
-                            <option value="Rejected" ${r.visaStatus === 'Rejected' ? 'selected' : ''}>Rejected</option>
-                        </select>
-                    </td>
-                    <td class="px-3 py-3 text-center">
                         <select onchange="quickUpdateField('${r.id}', 'refStatus', this.value)" class="text-[11px] font-bold px-2 py-1 rounded-full border cursor-pointer focus:outline-none ${getStatusColor(r.refStatus)}">
                             <option value="Pending" ${r.refStatus === 'Pending' ? 'selected' : ''}>Pending</option>
                             <option value="Complete" ${r.refStatus === 'Complete' ? 'selected' : ''}>Complete</option>
@@ -626,6 +794,16 @@
                             <option value="Pending" ${r.girishStatus === 'Pending' ? 'selected' : ''}>Pending</option>
                             <option value="Complete" ${r.girishStatus === 'Complete' ? 'selected' : ''}>Complete</option>
                         </select>
+                    </td>
+                    <td class="px-3 py-3 text-center">
+                        <select onchange="quickUpdateField('${r.id}', 'visaStatus', this.value)" class="text-[11px] font-bold px-2 py-1 rounded-full border cursor-pointer focus:outline-none ${getStatusColor(r.visaStatus)}">
+                            <option value="Pending" ${r.visaStatus === 'Pending' ? 'selected' : ''}>Pending</option>
+                            <option value="Complete" ${r.visaStatus === 'Complete' ? 'selected' : ''}>Complete</option>
+                            <option value="Rejected" ${r.visaStatus === 'Rejected' ? 'selected' : ''}>Rejected</option>
+                        </select>
+                    </td>
+                    <td class="px-3 py-3 text-center min-w-[125px]">
+                        ${ticketCellHtml}
                     </td>
                     <td class="px-3 py-3 text-center whitespace-nowrap">
                         <div class="flex flex-col gap-1 items-center">
@@ -643,7 +821,7 @@
                         </div>
                     </td>
                 </tr>
-            `).join('');
+            `}).join('');
         }
 
         // Render Agent Summary Tab
@@ -653,7 +831,7 @@
                 if (!agentMap[r.agentName]) {
                     agentMap[r.agentName] = {
                         name: r.agentName, total: 0, study: 0, work: 0, azaad: 0,
-                        visaComp: 0, visaPend: 0, visaRej: 0, payComp: 0, payPend: 0
+                        visaComp: 0, ticketsDone: 0, visaPend: 0, visaRej: 0, payComp: 0, payPend: 0
                     };
                 }
                 const a = agentMap[r.agentName];
@@ -662,6 +840,7 @@
                 if (r.visaType === 'Work Visa') a.work++;
                 if (r.visaType === 'Azaad Visa') a.azaad++;
                 if (r.visaStatus === 'Complete') a.visaComp++;
+                if (r.visaStatus === 'Complete' && r.ticketStatus === 'Complete') a.ticketsDone++;
                 if (r.visaStatus === 'Pending') a.visaPend++;
                 if (r.visaStatus === 'Rejected') a.visaRej++;
                 if (r.paymentStatus === 'Complete') a.payComp++;
@@ -682,10 +861,10 @@
                     <td class="px-4 py-3 text-center font-bold text-blue-600">${a.total}</td>
                     <td class="px-4 py-3 text-center text-xs">${a.study} / ${a.work} / ${a.azaad}</td>
                     <td class="px-4 py-3 text-center text-emerald-600 font-semibold">${a.visaComp}</td>
+                    <td class="px-4 py-3 text-center text-purple-600 font-semibold">${a.ticketsDone}</td>
                     <td class="px-4 py-3 text-center text-amber-600 font-semibold">${a.visaPend}</td>
                     <td class="px-4 py-3 text-center text-red-600 font-semibold">${a.visaRej}</td>
-                    <td class="px-4 py-3 text-center text-emerald-600 font-semibold">${a.payComp}</td>
-                    <td class="px-4 py-3 text-center text-amber-600 font-semibold">${a.payPend}</td>
+                    <td class="px-4 py-3 text-center text-xs font-semibold"><span class="text-emerald-600">${a.payComp}</span> / <span class="text-amber-600">${a.payPend}</span></td>
                     <td class="px-4 py-3 text-center">
                         <button onclick="openAgentSlip('${a.name.replace(/'/g, "\\'")}')" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded text-xs font-semibold shadow flex items-center gap-1 mx-auto">
                             <i class="fas fa-qrcode"></i> Agent Slip
@@ -706,6 +885,8 @@
 
             const balance = r.totalAmount - r.paidAmount;
             const displayRef = r.refNumber ? `${r.refStatus} (${r.refNumber})` : r.refStatus;
+            const hasTicket = r.visaStatus === 'Complete' && r.ticketStatus === 'Complete' && r.ticketDate;
+            const totalDuration = hasTicket ? calculateDuration(r.date, r.ticketDate) : 'In Process';
 
             document.getElementById('slipDynamicContent').innerHTML = `
                 <div class="grid grid-cols-2 gap-4 text-sm bg-gray-50 p-4 rounded-xl border border-gray-200">
@@ -716,39 +897,50 @@
                     <div><span class="text-gray-500">Passport No:</span> <strong class="text-gray-900 block font-mono">${r.passportNo}</strong></div>
                     <div><span class="text-gray-500">Contact No:</span> <strong class="text-gray-900 block">${r.contactNo}</strong></div>
                     <div><span class="text-gray-500">Visa Category:</span> <strong class="text-indigo-700 block">${r.visaType} (${r.country})</strong></div>
-                    <div><span class="text-gray-500">Entry Date:</span> <strong class="text-gray-900 block">${r.date}</strong></div>
+                    <div><span class="text-gray-500">Client Entry Date:</span> <strong class="text-gray-900 block">${formatDisplayDate(r.date)}</strong></div>
                 </div>
 
-                <div class="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-                    <div class="p-3 border rounded-lg">
-                        <span class="text-xs text-gray-500 block">Payment Status</span>
-                        <strong class="text-sm ${r.paymentStatus === 'Complete' ? 'text-emerald-600' : 'text-amber-600'}">${r.paymentStatus}</strong>
+                <div class="mt-4 grid grid-cols-2 sm:grid-cols-5 gap-2 text-center">
+                    <div class="p-2.5 border rounded-lg">
+                        <span class="text-[11px] text-gray-500 block">Payment</span>
+                        <strong class="text-xs ${r.paymentStatus === 'Complete' ? 'text-emerald-600' : 'text-amber-600'}">${r.paymentStatus}</strong>
                     </div>
-                    <div class="p-3 border rounded-lg">
-                        <span class="text-xs text-gray-500 block">Visa Status</span>
-                        <strong class="text-sm ${r.visaStatus === 'Complete' ? 'text-emerald-600' : (r.visaStatus === 'Rejected' ? 'text-red-600' : 'text-amber-600')}">${r.visaStatus}</strong>
+                    <div class="p-2.5 border rounded-lg">
+                        <span class="text-[11px] text-gray-500 block">Visa Status</span>
+                        <strong class="text-xs ${r.visaStatus === 'Complete' ? 'text-emerald-600' : (r.visaStatus === 'Rejected' ? 'text-red-600' : 'text-amber-600')}">${r.visaStatus}</strong>
                     </div>
-                    <div class="p-3 border rounded-lg">
-                        <span class="text-xs text-gray-500 block">Reference No</span>
-                        <strong class="text-sm ${r.refStatus === 'Complete' ? 'text-emerald-600' : 'text-amber-600'}">${r.refStatus}</strong>
-                        ${r.refNumber ? `<span class="block text-xs font-mono font-bold text-gray-900 mt-0.5">${r.refNumber}</span>` : ''}
+                    <div class="p-2.5 border rounded-lg">
+                        <span class="text-[11px] text-gray-500 block">Reference</span>
+                        <strong class="text-xs ${r.refStatus === 'Complete' ? 'text-emerald-600' : 'text-amber-600'}">${r.refStatus}</strong>
+                        ${r.refNumber ? `<span class="block text-[11px] font-mono font-bold text-gray-900 mt-0.5">${r.refNumber}</span>` : ''}
                     </div>
-                    <div class="p-3 border rounded-lg">
-                        <span class="text-xs text-gray-500 block">Girish Status</span>
-                        <strong class="text-sm ${r.girishStatus === 'Complete' ? 'text-emerald-600' : 'text-amber-600'}">${r.girishStatus}</strong>
+                    <div class="p-2.5 border rounded-lg">
+                        <span class="text-[11px] text-gray-500 block">Girish Status</span>
+                        <strong class="text-xs ${r.girishStatus === 'Complete' ? 'text-emerald-600' : 'text-amber-600'}">${r.girishStatus}</strong>
+                    </div>
+                    <div class="p-2.5 border rounded-lg bg-purple-50 border-purple-200">
+                        <span class="text-[11px] text-purple-700 block">Ticket Status</span>
+                        <strong class="text-xs ${hasTicket ? 'text-purple-800' : 'text-amber-600'}">${r.visaStatus === 'Complete' ? (r.ticketStatus || 'Pending') : 'N/A'}</strong>
+                        ${hasTicket ? `<span class="block text-[10px] text-gray-700 mt-0.5">${formatDisplayDate(r.ticketDate)}</span>` : ''}
                     </div>
                 </div>
+
+                ${hasTicket ? `
+                <div class="mt-3 p-3 bg-purple-100 rounded-lg border border-purple-300 flex justify-between items-center text-xs font-bold text-purple-900">
+                    <span><i class="fas fa-calendar-alt mr-1"></i> Entry: ${formatDisplayDate(r.date)} &rarr; Ticket: ${formatDisplayDate(r.ticketDate)}</span>
+                    <span class="bg-purple-700 text-white px-2.5 py-1 rounded">Total Processing Time: ${totalDuration}</span>
+                </div>` : ''}
 
                 ${r.totalAmount > 0 ? `
-                <div class="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200 flex justify-between text-xs font-semibold">
+                <div class="mt-3 p-3 bg-blue-50 rounded-lg border border-blue-200 flex justify-between text-xs font-semibold">
                     <span>Total Deal: PKR ${r.totalAmount.toLocaleString()}</span>
                     <span class="text-emerald-700">Paid: PKR ${r.paidAmount.toLocaleString()}</span>
                     <span class="text-red-600">Balance: PKR ${balance.toLocaleString()}</span>
                 </div>` : ''}
             `;
 
-            // Generate QR Data with all details including Reference Number
-            const qrText = `POLARIS CONSULTANTS\nID: ${r.id}\nAgent: ${r.agentName}\nClient: ${r.customerName} S/O ${r.fatherName}\nCNIC: ${r.cnic}\nPassport: ${r.passportNo}\nContact: ${r.contactNo}\nVisa: ${r.visaType} (${r.visaStatus})\nPayment: ${r.paymentStatus}\nRef: ${displayRef}\nGirish: ${r.girishStatus}`;
+            const qrTicketStr = hasTicket ? `Complete (${formatDisplayDate(r.ticketDate)}) | Time: ${totalDuration}` : (r.visaStatus === 'Complete' ? 'Pending' : 'N/A');
+            const qrText = `POLARIS CONSULTANTS\nID: ${r.id}\nEntry: ${formatDisplayDate(r.date)}\nAgent: ${r.agentName}\nClient: ${r.customerName} S/O ${r.fatherName}\nCNIC: ${r.cnic}\nPassport: ${r.passportNo}\nContact: ${r.contactNo}\nVisa: ${r.visaType} (${r.visaStatus})\nPayment: ${r.paymentStatus}\nRef: ${displayRef}\nGirish: ${r.girishStatus}\nTicket: ${qrTicketStr}`;
 
             generateQR(qrText);
             document.getElementById('slipModal').classList.remove('hidden');
@@ -764,53 +956,54 @@
             document.getElementById('slipId').innerText = 'AGT-' + Math.floor(1000 + Math.random() * 9000);
 
             const completeVisas = agentClients.filter(c => c.visaStatus === 'Complete').length;
+            const completeTickets = agentClients.filter(c => c.visaStatus === 'Complete' && c.ticketStatus === 'Complete').length;
             const pendingPayments = agentClients.filter(c => c.paymentStatus === 'Pending').length;
 
-            let rowsHtml = agentClients.map((c, idx) => `
-                <tr class="border-b text-xs">
-                    <td class="py-1.5 px-2">${idx + 1}</td>
-                    <td class="py-1.5 px-2 font-semibold">${c.customerName}<br><span class="text-[10px] text-gray-500">S/O ${c.fatherName}</span></td>
-                    <td class="py-1.5 px-2 font-mono">${c.passportNo}<br><span class="text-[10px] text-gray-500">${c.cnic}</span></td>
-                    <td class="py-1.5 px-2">${c.visaType}</td>
-                    <td class="py-1.5 px-2 text-center">${c.paymentStatus}</td>
-                    <td class="py-1.5 px-2 text-center">${c.visaStatus}</td>
-                    <td class="py-1.5 px-2 text-center">
-                        ${c.refStatus}
-                        ${c.refNumber ? `<br><span class="font-mono font-bold text-[10px] text-gray-900">(${c.refNumber})</span>` : ''}
-                    </td>
-                    <td class="py-1.5 px-2 text-center">${c.girishStatus}</td>
+            let rowsHtml = agentClients.map((c, idx) => {
+                const hasTicket = c.visaStatus === 'Complete' && c.ticketStatus === 'Complete' && c.ticketDate;
+                const dur = hasTicket ? calculateDuration(c.date, c.ticketDate) : '-';
+                return `
+                <tr class="border-b text-[11px]">
+                    <td class="py-1.5 px-1.5">${idx + 1}</td>
+                    <td class="py-1.5 px-1.5 font-semibold">${c.customerName}<br><span class="text-[9px] text-gray-500">Entry: ${formatDisplayDate(c.date)}</span></td>
+                    <td class="py-1.5 px-1.5 font-mono">${c.passportNo}</td>
+                    <td class="py-1.5 px-1.5 text-center">${c.paymentStatus}</td>
+                    <td class="py-1.5 px-1.5 text-center">${c.visaStatus}</td>
+                    <td class="py-1.5 px-1.5 text-center">${c.refNumber || c.refStatus}</td>
+                    <td class="py-1.5 px-1.5 text-center">${hasTicket ? `${formatDisplayDate(c.ticketDate)}<br><strong>(${dur})</strong>` : (c.visaStatus === 'Complete' ? 'Pending' : '-')}</td>
                 </tr>
-            `).join('');
+            `}).join('');
 
             document.getElementById('slipDynamicContent').innerHTML = `
                 <div class="bg-gray-50 p-3 rounded-lg border mb-4 flex justify-between items-center text-sm">
                     <div><span class="text-gray-500">Agent Name:</span> <strong class="text-lg text-gray-900 ml-1">${agentName}</strong></div>
                     <div class="text-right text-xs">
-                        <span class="block">Total Clients: <strong>${agentClients.length}</strong></span>
-                        <span class="block text-emerald-600">Visas Complete: <strong>${completeVisas}</strong></span>
-                        <span class="block text-amber-600">Pending Payments: <strong>${pendingPayments}</strong></span>
+                        <span class="block">Total Clients: <strong>${agentClients.length}</strong> | Visas Complete: <strong class="text-emerald-600">${completeVisas}</strong></span>
+                        <span class="block">Tickets Done: <strong class="text-purple-600">${completeTickets}</strong> | Pending Pay: <strong class="text-amber-600">${pendingPayments}</strong></span>
                     </div>
                 </div>
 
                 <table class="w-full text-left border-collapse border border-gray-200">
-                    <thead class="bg-gray-800 text-white text-[11px] uppercase">
+                    <thead class="bg-gray-800 text-white text-[10px] uppercase">
                         <tr>
-                            <th class="py-1.5 px-2">#</th>
-                            <th class="py-1.5 px-2">Customer</th>
-                            <th class="py-1.5 px-2">Passport / CNIC</th>
-                            <th class="py-1.5 px-2">Visa</th>
-                            <th class="py-1.5 px-2 text-center">Payment</th>
-                            <th class="py-1.5 px-2 text-center">Visa St.</th>
-                            <th class="py-1.5 px-2 text-center">Ref No</th>
-                            <th class="py-1.5 px-2 text-center">Girish</th>
+                            <th class="py-1.5 px-1.5">#</th>
+                            <th class="py-1.5 px-1.5">Customer & Entry</th>
+                            <th class="py-1.5 px-1.5">Passport</th>
+                            <th class="py-1.5 px-1.5 text-center">Payment</th>
+                            <th class="py-1.5 px-1.5 text-center">Visa</th>
+                            <th class="py-1.5 px-1.5 text-center">Ref</th>
+                            <th class="py-1.5 px-1.5 text-center">Ticket & Time</th>
                         </tr>
                     </thead>
                     <tbody>${rowsHtml}</tbody>
                 </table>
             `;
 
-            const summaryClients = agentClients.map(c => `${c.customerName}(${c.passportNo}|Ref:${c.refNumber || c.refStatus}|Visa:${c.visaStatus}|Pay:${c.paymentStatus})`).join('; ');
-            const qrText = `POLARIS AGENT SLIP\nAgent: ${agentName}\nTotal Clients: ${agentClients.length}\nComplete Visas: ${completeVisas}\nPending Pay: ${pendingPayments}\nDetails: ${summaryClients}`.slice(0, 800);
+            const summaryClients = agentClients.map(c => {
+                const dur = (c.visaStatus === 'Complete' && c.ticketStatus === 'Complete' && c.ticketDate) ? calculateDuration(c.date, c.ticketDate) : 'Pending';
+                return `${c.customerName}(${c.passportNo}|Visa:${c.visaStatus}|Tkt:${dur})`;
+            }).join('; ');
+            const qrText = `POLARIS AGENT SLIP\nAgent: ${agentName}\nClients: ${agentClients.length}\nVisas: ${completeVisas}\nTickets: ${completeTickets}\nDetails: ${summaryClients}`.slice(0, 800);
 
             generateQR(qrText);
             document.getElementById('slipModal').classList.remove('hidden');
@@ -853,26 +1046,32 @@
                 return;
             }
 
-            const clientSheetData = records.map(r => ({
-                'Record ID': r.id,
-                'Date': r.date,
-                'Agent Name': r.agentName,
-                'Customer Name': r.customerName,
-                'Father Name': r.fatherName,
-                'CNIC': r.cnic,
-                'Passport No': r.passportNo,
-                'Contact No': r.contactNo,
-                'Country': r.country,
-                'Visa Category': r.visaType,
-                'Payment Status': r.paymentStatus,
-                'Visa Status': r.visaStatus,
-                'Reference Status': r.refStatus,
-                'Reference Number': r.refNumber || 'N/A',
-                'Girish': r.girishStatus,
-                'Total Amount': r.totalAmount,
-                'Paid Amount': r.paidAmount,
-                'Balance': r.totalAmount - r.paidAmount
-            }));
+            const clientSheetData = records.map(r => {
+                const hasTicket = r.visaStatus === 'Complete' && r.ticketStatus === 'Complete' && r.ticketDate;
+                return {
+                    'Record ID': r.id,
+                    'Entry Date': formatDisplayDate(r.date),
+                    'Agent Name': r.agentName,
+                    'Customer Name': r.customerName,
+                    'Father Name': r.fatherName,
+                    'CNIC': r.cnic,
+                    'Passport No': r.passportNo,
+                    'Contact No': r.contactNo,
+                    'Country': r.country,
+                    'Visa Category': r.visaType,
+                    'Payment Status': r.paymentStatus,
+                    'Visa Status': r.visaStatus,
+                    'Reference Status': r.refStatus,
+                    'Reference Number': r.refNumber || 'N/A',
+                    'Girish': r.girishStatus,
+                    'Ticket Status': r.visaStatus === 'Complete' ? (r.ticketStatus || 'Pending') : 'N/A',
+                    'Ticket Date': hasTicket ? formatDisplayDate(r.ticketDate) : 'N/A',
+                    'Total Processing Time': hasTicket ? calculateDuration(r.date, r.ticketDate) : 'In Process',
+                    'Total Amount': r.totalAmount,
+                    'Paid Amount': r.paidAmount,
+                    'Balance': r.totalAmount - r.paidAmount
+                };
+            });
 
             const wb = XLSX.utils.book_new();
             const wsClients = XLSX.utils.json_to_sheet(clientSheetData);
@@ -882,10 +1081,11 @@
             const agentMap = {};
             records.forEach(r => {
                 if (!agentMap[r.agentName]) {
-                    agentMap[r.agentName] = { 'Agent Name': r.agentName, 'Total Clients': 0, 'Visa Complete': 0, 'Visa Pending': 0, 'Visa Rejected': 0, 'Payment Complete': 0, 'Payment Pending': 0 };
+                    agentMap[r.agentName] = { 'Agent Name': r.agentName, 'Total Clients': 0, 'Visa Complete': 0, 'Tickets Done': 0, 'Visa Pending': 0, 'Visa Rejected': 0, 'Payment Complete': 0, 'Payment Pending': 0 };
                 }
                 agentMap[r.agentName]['Total Clients']++;
                 if (r.visaStatus === 'Complete') agentMap[r.agentName]['Visa Complete']++;
+                if (r.visaStatus === 'Complete' && r.ticketStatus === 'Complete') agentMap[r.agentName]['Tickets Done']++;
                 if (r.visaStatus === 'Pending') agentMap[r.agentName]['Visa Pending']++;
                 if (r.visaStatus === 'Rejected') agentMap[r.agentName]['Visa Rejected']++;
                 if (r.paymentStatus === 'Complete') agentMap[r.agentName]['Payment Complete']++;
@@ -900,23 +1100,25 @@
 
         // Print Full Report
         function printFullReport() {
-            const win = window.open('', '', 'width=1050,height=700');
-            let rows = records.map((r, i) => `
+            const win = window.open('', '', 'width=1150,height=700');
+            let rows = records.map((r, i) => {
+                const hasTicket = r.visaStatus === 'Complete' && r.ticketStatus === 'Complete' && r.ticketDate;
+                return `
                 <tr>
                     <td>${i + 1}</td>
+                    <td>${formatDisplayDate(r.date)}</td>
                     <td>${r.agentName}</td>
                     <td>${r.customerName}</td>
-                    <td>${r.fatherName}</td>
                     <td>${r.cnic}</td>
                     <td>${r.passportNo}</td>
-                    <td>${r.contactNo}</td>
                     <td>${r.visaType}</td>
                     <td>${r.paymentStatus}</td>
-                    <td>${r.visaStatus}</td>
                     <td>${r.refStatus} ${r.refNumber ? '(' + r.refNumber + ')' : ''}</td>
                     <td>${r.girishStatus}</td>
+                    <td>${r.visaStatus}</td>
+                    <td>${hasTicket ? `${formatDisplayDate(r.ticketDate)} (${calculateDuration(r.date, r.ticketDate)})` : (r.visaStatus === 'Complete' ? 'Pending' : '-')}</td>
                 </tr>
-            `).join('');
+            `}).join('');
 
             win.document.write(`
                 <html>
@@ -926,8 +1128,8 @@
                         body { font-family: Arial, sans-serif; padding: 20px; }
                         h2 { text-align: center; color: #dc2626; margin-bottom: 5px; }
                         p { text-align: center; font-size: 12px; color: #555; margin-top: 0; }
-                        table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 15px; }
-                        th, td { border: 1px solid #333; padding: 6px; text-align: left; }
+                        table { width: 100%; border-collapse: collapse; font-size: 10px; margin-top: 15px; }
+                        th, td { border: 1px solid #333; padding: 5px; text-align: left; }
                         th { background-color: #111827; color: white; }
                     </style>
                 </head>
@@ -937,9 +1139,9 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>#</th><th>Agent</th><th>Customer</th><th>Father Name</th><th>CNIC</th>
-                                <th>Passport</th><th>Contact</th><th>Visa</th><th>Payment</th>
-                                <th>Visa Status</th><th>Reference</th><th>Girish</th>
+                                <th>#</th><th>Entry Date</th><th>Agent</th><th>Customer</th><th>CNIC</th>
+                                <th>Passport</th><th>Visa</th><th>Payment</th>
+                                <th>Reference</th><th>Girish</th><th>Visa Status</th><th>Ticket & Duration</th>
                             </tr>
                         </thead>
                         <tbody>${rows}</tbody>

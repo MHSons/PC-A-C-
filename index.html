@@ -23,11 +23,11 @@
             background: linear-gradient(90deg, #16a34a 0%, #0284c7 35%, #ef4444 70%, #9333ea 100%);
         }
 
-        /* Clean Single-Page Print Fix */
+        /* Clean Single-Page Print Fix (Removes Browser Top Title & Bottom URL) */
         @media print {
             @page {
                 size: A4 portrait;
-                margin: 10mm;
+                margin: 0mm;
             }
             html, body {
                 height: auto !important;
@@ -44,7 +44,7 @@
                 inset: auto !important;
                 display: block !important;
                 background: white !important;
-                padding: 0 !important;
+                padding: 12mm !important;
                 width: 100% !important;
                 height: auto !important;
                 overflow: visible !important;
@@ -58,7 +58,7 @@
                 margin: 0 !important;
             }
             #printableArea {
-                padding: 10px 15px !important;
+                padding: 5px 10px !important;
                 width: 100% !important;
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
@@ -410,7 +410,7 @@
             <div class="flex justify-between items-center p-4 border-b bg-gray-50 rounded-t-2xl no-print">
                 <h3 class="font-bold text-gray-800"><i class="fas fa-receipt text-red-600 mr-2"></i>Official Slip Preview</h3>
                 <div class="flex gap-2">
-                    <button onclick="window.print()" class="bg-sky-600 hover:bg-sky-700 text-white px-4 py-1.5 rounded-lg text-sm font-semibold shadow flex items-center gap-2">
+                    <button onclick="printSlipClean()" class="bg-sky-600 hover:bg-sky-700 text-white px-4 py-1.5 rounded-lg text-sm font-semibold shadow flex items-center gap-2">
                         <i class="fas fa-print"></i> Print Slip
                     </button>
                     <button onclick="closeSlipModal()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-3 py-1.5 rounded-lg text-sm font-semibold">
@@ -421,14 +421,13 @@
 
             <!-- Printable Slip Content -->
             <div id="printableArea" class="p-6 bg-white">
-                <!-- Slip Header -->
+                <!-- Slip Header (No Address) -->
                 <div class="flex justify-between items-center pb-3 mb-2">
                     <div class="flex items-center gap-4">
                         <img src="logo.png" alt="Polaris Logo" onerror="handleLogoFallback(this)" class="h-16 w-auto object-contain">
                         <div>
                             <h1 class="text-2xl font-black tracking-wide text-gray-900">POLARIS <span class="text-red-600">CONSULTANTS</span></h1>
                             <p class="text-xs font-semibold text-sky-700">Study Visa | Work Visa | Azaad Visa Consultancy</p>
-                            <p class="text-xs text-gray-500">Johar Town, Lahore, Pakistan</p>
                         </div>
                     </div>
                     <div class="text-right">
@@ -486,6 +485,16 @@
             } else {
                 img.style.display = 'none';
             }
+        }
+
+        // Clean Print Slip Function (Clears page title so browser doesn't print "Polaris Consultants - Agent & Client Portal" at top)
+        function printSlipClean() {
+            const originalTitle = document.title;
+            document.title = "\u00A0";
+            window.print();
+            setTimeout(() => {
+                document.title = originalTitle;
+            }, 500);
         }
 
         // LocalStorage Key

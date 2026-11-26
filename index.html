@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Polaris Consultants - Agent & Client Portal</title>
+    <title>Polaris Consultants - Representative / Executive & Client Portal</title>
     <link rel="icon" type="image/png" href="logo.png">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -183,7 +183,7 @@
                     <img src="logo.png" alt="Polaris Consultants" onerror="handleLogoFallback(this)" class="h-14 w-auto object-contain">
                     <div>
                         <h1 class="text-2xl font-black tracking-wider text-gray-900">POLARIS <span class="text-red-600">CONSULTANTS</span></h1>
-                        <p class="text-xs font-semibold text-sky-700">Agent & Client Visa Management System</p>
+                        <p class="text-xs font-semibold text-sky-700">Representative / Executive & Client Visa Management System</p>
                     </div>
                 </div>
                 <div class="flex flex-wrap gap-2">
@@ -220,7 +220,7 @@
             <div class="bg-white rounded-xl shadow p-3.5 border-l-4 border-sky-600">
                 <div class="flex justify-between items-center">
                     <div>
-                        <p class="text-[11px] font-semibold text-gray-500 uppercase">Total Agents</p>
+                        <p class="text-[11px] font-semibold text-gray-500 uppercase">Total Representative / Executives</p>
                         <h3 class="text-2xl font-bold text-gray-900 mt-1" id="statTotalAgents">0</h3>
                     </div>
                     <div class="p-2 bg-sky-50 rounded-full text-sky-600"><i class="fas fa-user-tie text-base"></i></div>
@@ -294,7 +294,7 @@
                 <i class="fas fa-plus-circle"></i> Client Entry & Records
             </button>
             <button onclick="switchTab('agentSummaryTab')" id="btnAgentSummaryTab" class="py-3 px-6 font-semibold text-sm border-b-2 border-transparent text-gray-500 hover:text-gray-700 flex items-center gap-2">
-                <i class="fas fa-chart-pie"></i> Agent-Wise Summary & Slips
+                <i class="fas fa-chart-pie"></i> Representative / Executive-Wise Summary & Slips
             </button>
         </div>
 
@@ -313,7 +313,7 @@
                     <input type="hidden" id="editId">
 
                     <div>
-                        <label class="block text-xs font-semibold text-gray-700 mb-1">Agent Name *</label>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Representative / Executive Name *</label>
                         <input type="text" id="agentName" list="agentSuggestions" required placeholder="e.g. Asad" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none">
                         <datalist id="agentSuggestions"></datalist>
                     </div>
@@ -444,10 +444,10 @@
                 <div class="flex flex-wrap gap-3 flex-1">
                     <div class="relative flex-1 min-w-[200px]">
                         <i class="fas fa-search absolute left-3 top-3 text-gray-400 text-sm"></i>
-                        <input type="text" id="searchInput" onkeyup="renderTable()" placeholder="Search Name, Passport, CNIC, Ref No, Agent..." class="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-red-500">
+                        <input type="text" id="searchInput" onkeyup="renderTable()" placeholder="Search Name, Passport, CNIC, Ref No, Representative / Executive..." class="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-red-500">
                     </div>
                     <select id="filterAgent" onchange="renderTable()" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white">
-                        <option value="">All Agents</option>
+                        <option value="">All Representative / Executives</option>
                     </select>
                     <select id="filterVisaType" onchange="renderTable()" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white">
                         <option value="">All Visa Types</option>
@@ -473,7 +473,7 @@
                     <table class="min-w-full divide-y divide-gray-200 text-xs">
                         <thead class="bg-gray-900 text-white uppercase">
                             <tr>
-                                <th class="px-3 py-3 text-left">ID / Entry Date / Agent</th>
+                                <th class="px-3 py-3 text-left">ID / Entry Date / Representative / Executive</th>
                                 <th class="px-3 py-3 text-left">Customer & Father</th>
                                 <th class="px-3 py-3 text-left">CNIC / Passport / Cell</th>
                                 <th class="px-3 py-3 text-left">Visa Info</th>
@@ -493,17 +493,17 @@
             </div>
         </div>
 
-        <!-- TAB 2: AGENT SUMMARY -->
+        <!-- TAB 2: REPRESENTATIVE / EXECUTIVE SUMMARY -->
         <div id="agentSummaryTab" class="hidden">
             <div class="bg-white rounded-xl shadow-md p-6">
                 <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-lg font-bold text-gray-800"><i class="fas fa-user-tie text-sky-600 mr-2"></i>Total Agent Performance & Summary</h2>
+                    <h2 class="text-lg font-bold text-gray-800"><i class="fas fa-user-tie text-sky-600 mr-2"></i>Total Representative / Executive Performance & Summary</h2>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200 text-sm">
                         <thead class="bg-gray-900 text-white text-xs uppercase">
                             <tr>
-                                <th class="px-4 py-3 text-left">Agent Name</th>
+                                <th class="px-4 py-3 text-left">Representative / Executive Name</th>
                                 <th class="px-4 py-3 text-center">Total Clients</th>
                                 <th class="px-4 py-3 text-center">Study / Work / Azaad</th>
                                 <th class="px-4 py-3 text-center">Visa Complete</th>
@@ -511,11 +511,11 @@
                                 <th class="px-4 py-3 text-center">Visa Pending</th>
                                 <th class="px-4 py-3 text-center">Rejected</th>
                                 <th class="px-4 py-3 text-center">Pay Complete / Pend</th>
-                                <th class="px-4 py-3 text-center">Agent Slip</th>
+                                <th class="px-4 py-3 text-center">Representative / Executive Slip</th>
                             </tr>
                         </thead>
                         <tbody id="agentSummaryBody" class="divide-y divide-gray-200">
-                            <!-- Agent summary injected by JS -->
+                            <!-- Representative / Executive summary injected by JS -->
                         </tbody>
                     </table>
                 </div>
@@ -1018,7 +1018,7 @@
             document.getElementById('statPaymentPending').innerText = records.filter(r => r.paymentStatus === 'Pending').length;
         }
 
-        // Populate Agent Datalist & Filter Dropdown
+        // Populate Representative / Executive Datalist & Filter Dropdown
         function populateAgentFilters() {
             const agents = [...new Set(records.map(r => r.agentName))].sort();
             const datalist = document.getElementById('agentSuggestions');
@@ -1026,7 +1026,7 @@
             const currentFilter = filterSelect.value;
 
             datalist.innerHTML = agents.map(a => `<option value="${a}">`).join('');
-            filterSelect.innerHTML = `<option value="">All Agents (${agents.length})</option>` + 
+            filterSelect.innerHTML = `<option value="">All Representative / Executives (${agents.length})</option>` + 
                 agents.map(a => `<option value="${a}">${a}</option>`).join('');
             filterSelect.value = currentFilter;
         }
@@ -1159,7 +1159,7 @@
             `}).join('');
         }
 
-        // Render Agent Summary Tab
+        // Render Representative / Executive Summary Tab
         function renderAgentSummary() {
             const agentMap = {};
             records.forEach(r => {
@@ -1186,7 +1186,7 @@
             const agents = Object.values(agentMap);
 
             if (agents.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="9" class="text-center py-8 text-gray-400">No agent data available.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="9" class="text-center py-8 text-gray-400">No representative / executive data available.</td></tr>`;
                 return;
             }
 
@@ -1202,7 +1202,7 @@
                     <td class="px-4 py-3 text-center text-xs font-semibold"><span class="text-emerald-600">${a.payComp}</span> / <span class="text-orange-600">${a.payPend}</span></td>
                     <td class="px-4 py-3 text-center">
                         <button onclick="openAgentSlip('${a.name.replace(/'/g, "\\'")}')" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded text-xs font-semibold shadow flex items-center gap-1 mx-auto">
-                            <i class="fas fa-qrcode"></i> Agent Slip
+                            <i class="fas fa-qrcode"></i> Representative / Executive Slip
                         </button>
                     </td>
                 </tr>
@@ -1229,7 +1229,7 @@
 
             document.getElementById('slipDynamicContent').innerHTML = `
                 <div class="grid grid-cols-2 gap-3 text-sm bg-gray-50 p-3.5 rounded-xl border border-gray-200">
-                    <div><span class="text-gray-500 text-xs">Agent Name:</span> <strong class="text-gray-900 block">${r.agentName}</strong></div>
+                    <div><span class="text-gray-500 text-xs">Representative / Executive Name:</span> <strong class="text-gray-900 block">${r.agentName}</strong></div>
                     <div><span class="text-gray-500 text-xs">Customer Name:</span> <strong class="text-gray-900 block">${r.customerName}</strong></div>
                     <div><span class="text-gray-500 text-xs">Father Name:</span> <strong class="text-gray-900 block">${r.fatherName}</strong></div>
                     <div><span class="text-gray-500 text-xs">CNIC No:</span> <strong class="text-gray-900 block">${r.cnic}</strong></div>
@@ -1279,23 +1279,23 @@
             `;
 
             const qrTicketStr = hasTicket ? `Complete (${formatDisplayDate(r.ticketDate)}) | Time: ${totalDuration}` : (r.visaStatus === 'Complete' ? 'Pending' : 'N/A');
-            const qrText = `POLARIS CONSULTANTS\nID: ${r.id}\nEntry: ${formatDisplayDate(r.date)}\nAgent: ${r.agentName}\nClient: ${r.customerName} S/O ${r.fatherName}\nCNIC: ${r.cnic}\nPassport: ${r.passportNo}\nContact: ${r.contactNo}\nVisa: ${r.visaType} (${r.visaStatus})\nPayment: ${r.paymentStatus}\nRef: ${displayRef}\nGirish: ${r.girishStatus}\nTicket: ${qrTicketStr}`;
+            const qrText = `POLARIS CONSULTANTS\nID: ${r.id}\nEntry: ${formatDisplayDate(r.date)}\nRepresentative / Executive: ${r.agentName}\nClient: ${r.customerName} S/O ${r.fatherName}\nCNIC: ${r.cnic}\nPassport: ${r.passportNo}\nContact: ${r.contactNo}\nVisa: ${r.visaType} (${r.visaStatus})\nPayment: ${r.paymentStatus}\nRef: ${displayRef}\nGirish: ${r.girishStatus}\nTicket: ${qrTicketStr}`;
 
             generateQR(qrText);
             document.getElementById('slipModal').classList.remove('hidden');
         }
 
-        // Open Agent-Wise Consolidated Slip with QR Code & Agent Signature
+        // Open Representative / Executive-Wise Consolidated Slip with QR Code & Representative / Executive Signature
         function openAgentSlip(agentName) {
             const agentClients = records.filter(r => r.agentName === agentName);
             if (agentClients.length === 0) return;
 
-            document.getElementById('slipTypeBadge').innerText = 'AGENT STATEMENT & SLIP';
+            document.getElementById('slipTypeBadge').innerText = 'REPRESENTATIVE / EXECUTIVE STATEMENT & SLIP';
             document.getElementById('slipDate').innerText = new Date().toLocaleDateString('en-GB');
-            document.getElementById('slipId').innerText = 'AGT-' + Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('slipId').innerText = 'REP-' + Math.floor(1000 + Math.random() * 9000);
 
-            // Set Agent Signature Label & Name
-            document.getElementById('partySignLabel').innerText = 'Agent Signature';
+            // Set Representative / Executive Signature Label & Name
+            document.getElementById('partySignLabel').innerText = 'Representative / Executive Signature';
             document.getElementById('partySignName').innerText = `(${agentName})`;
 
             const completeVisas = agentClients.filter(c => c.visaStatus === 'Complete').length;
@@ -1319,7 +1319,7 @@
 
             document.getElementById('slipDynamicContent').innerHTML = `
                 <div class="bg-gray-50 p-3 rounded-lg border mb-3 flex justify-between items-center text-sm">
-                    <div><span class="text-gray-500">Agent Name:</span> <strong class="text-lg text-gray-900 ml-1">${agentName}</strong></div>
+                    <div><span class="text-gray-500">Representative / Executive Name:</span> <strong class="text-lg text-gray-900 ml-1">${agentName}</strong></div>
                     <div class="text-right text-xs">
                         <span class="block">Total Clients: <strong>${agentClients.length}</strong> | Visas Complete: <strong class="text-emerald-600">${completeVisas}</strong></span>
                         <span class="block">Tickets Done: <strong class="text-purple-600">${completeTickets}</strong> | Pending Pay: <strong class="text-orange-600">${pendingPayments}</strong></span>
@@ -1346,7 +1346,7 @@
                 const dur = (c.visaStatus === 'Complete' && c.ticketStatus === 'Complete' && c.ticketDate) ? calculateDuration(c.date, c.ticketDate) : 'Pending';
                 return `${c.customerName}(${c.passportNo}|Visa:${c.visaStatus}|Tkt:${dur})`;
             }).join('; ');
-            const qrText = `POLARIS AGENT SLIP\nAgent: ${agentName}\nClients: ${agentClients.length}\nVisas: ${completeVisas}\nTickets: ${completeTickets}\nDetails: ${summaryClients}`.slice(0, 800);
+            const qrText = `POLARIS REPRESENTATIVE / EXECUTIVE SLIP\nRepresentative / Executive: ${agentName}\nClients: ${agentClients.length}\nVisas: ${completeVisas}\nTickets: ${completeTickets}\nDetails: ${summaryClients}`.slice(0, 800);
 
             generateQR(qrText);
             document.getElementById('slipModal').classList.remove('hidden');
@@ -1382,7 +1382,7 @@
             document.getElementById(activeBtn).className = 'py-3 px-6 font-semibold text-sm border-b-2 border-red-600 text-red-600 flex items-center gap-2';
         }
 
-        // Export to Excel (2 Sheets: All Clients + Agent Summary)
+        // Export to Excel (2 Sheets: All Clients + Representative / Executive Summary)
         function exportToExcel() {
             if (records.length === 0) {
                 alert('No data available to export!');
@@ -1394,7 +1394,7 @@
                 return {
                     'Record ID': r.id,
                     'Entry Date': formatDisplayDate(r.date),
-                    'Agent Name': r.agentName,
+                    'Representative / Executive Name': r.agentName,
                     'Customer Name': r.customerName,
                     'Father Name': r.fatherName,
                     'CNIC': r.cnic,
@@ -1420,11 +1420,11 @@
             const wsClients = XLSX.utils.json_to_sheet(clientSheetData);
             XLSX.utils.book_append_sheet(wb, wsClients, 'All Clients');
 
-            // Agent Summary Sheet
+            // Representative / Executive Summary Sheet
             const agentMap = {};
             records.forEach(r => {
                 if (!agentMap[r.agentName]) {
-                    agentMap[r.agentName] = { 'Agent Name': r.agentName, 'Total Clients': 0, 'Visa Complete': 0, 'Tickets Done': 0, 'Visa Pending': 0, 'Visa Rejected': 0, 'Payment Complete': 0, 'Payment Pending': 0 };
+                    agentMap[r.agentName] = { 'Representative / Executive Name': r.agentName, 'Total Clients': 0, 'Visa Complete': 0, 'Tickets Done': 0, 'Visa Pending': 0, 'Visa Rejected': 0, 'Payment Complete': 0, 'Payment Pending': 0 };
                 }
                 agentMap[r.agentName]['Total Clients']++;
                 if (r.visaStatus === 'Complete') agentMap[r.agentName]['Visa Complete']++;
@@ -1436,7 +1436,7 @@
             });
 
             const wsAgents = XLSX.utils.json_to_sheet(Object.values(agentMap));
-            XLSX.utils.book_append_sheet(wb, wsAgents, 'Agent Summary');
+            XLSX.utils.book_append_sheet(wb, wsAgents, 'Representative Summary');
 
             XLSX.writeFile(wb, `Polaris_Consultants_Report_${new Date().toISOString().slice(0,10)}.xlsx`);
         }
@@ -1485,11 +1485,11 @@
                         <img src="logo.png" onerror="this.style.display='none'">
                         <h2>POLARIS <span>CONSULTANTS</span></h2>
                     </div>
-                    <p>Complete Client & Agent Report | Generated on: ${new Date().toLocaleString()} | Total Records: ${records.length}</p>
+                    <p>Complete Client & Representative / Executive Report | Generated on: ${new Date().toLocaleString()} | Total Records: ${records.length}</p>
                     <table>
                         <thead>
                             <tr>
-                                <th>#</th><th>Entry Date</th><th>Agent</th><th>Customer</th><th>CNIC</th>
+                                <th>#</th><th>Entry Date</th><th>Representative / Executive</th><th>Customer</th><th>CNIC</th>
                                 <th>Passport</th><th>Visa</th><th>Payment</th>
                                 <th>Reference</th><th>Girish</th><th>Visa Status</th><th>Ticket & Duration</th>
                             </tr>
